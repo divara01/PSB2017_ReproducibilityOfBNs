@@ -1,0 +1,1696 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+\hypersetup{unicode=true,
+            pdftitle={PSB 2017: Exploring the Reproducibility of Probabilistic Causal Molecular Network Models},
+            pdfauthor={Ariella Cohain \& Aparna Divaraniya},
+            pdfsubject={R Code used in analyses and generating figures and tables},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{PSB 2017: Exploring the Reproducibility of Probabilistic Causal
+Molecular Network Models}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+\subtitle{R Code used in analyses and generating figures and tables}
+  \author{Ariella Cohain \& Aparna Divaraniya}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{September 23, 2016}
+
+
+
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{4}
+\tableofcontents
+}
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+All files required to reproduce the results presented in this paper are
+located in the following directory:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gitPath <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/divara01/PSB2017_ReproducibilityOfBNs/"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Create Edges\_all object:}\label{create-edgesux5fall-object}
+
+This code breaks up the results from the RIMBAnet algorithm to save the
+resulting edges into a dataframe. Singletons are removed. Each edge is
+associated with a resulting posterior probability which is output from
+the algorithm as well. The resulting edges\_all file is saved in the
+current working directory. This is where all downstream output will be
+saved.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{stringsAsFactors =} \NormalTok{F)}
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list =} \KeywordTok{ls}\NormalTok{())}
+
+\NormalTok{#### Load all files into R####}
+\NormalTok{gitPath <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/divara01/PSB2017_ReproducibilityOfBNs/"}\NormalTok{)}
+\NormalTok{dataset <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"GTEx"}\NormalTok{, }\StringTok{"STARNET"}\NormalTok{, }\StringTok{"Simulation"}\NormalTok{)}
+\NormalTok{subSets <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\NormalTok{replicates <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{)}
+
+\NormalTok{FullLabels <-}\StringTok{ }\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{sapply}\NormalTok{(subSets, function(x) }\KeywordTok{sapply}\NormalTok{(replicates, }
+    \NormalTok{function(y) }\KeywordTok{paste}\NormalTok{(x, y, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{))))}
+
+\NormalTok{for (datasetIndex in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(dataset)) \{}
+    \NormalTok{if (datasetIndex <}\StringTok{ }\DecValTok{3}\NormalTok{) \{}
+        \NormalTok{labels <-}\StringTok{ }\NormalTok{FullLabels[-}\KeywordTok{grep}\NormalTok{(}\StringTok{"10_"}\NormalTok{, FullLabels)]}
+    \NormalTok{\} else \{}
+        \NormalTok{labels <-}\StringTok{ }\NormalTok{FullLabels}
+    \NormalTok{\}}
+    
+    \NormalTok{for (index in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(labels)) \{}
+        \NormalTok{filename <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(gitPath, }\StringTok{"data/"}\NormalTok{, dataset[datasetIndex], }
+            \StringTok{"_"}\NormalTok{, labels[index], }\StringTok{"_EdgeFile"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+        \NormalTok{edgeFile_i <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(filename, }\DataTypeTok{quote =} \StringTok{"}\CharTok{\textbackslash{}"}\StringTok{"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }
+            \DataTypeTok{comment.char =} \StringTok{""}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+        \NormalTok{edgeFile_i <-}\StringTok{ }\KeywordTok{as.data.frame.matrix}\NormalTok{(}\KeywordTok{t}\NormalTok{(}\KeywordTok{apply}\NormalTok{(edgeFile_i, }
+            \DecValTok{1}\NormalTok{, function(x) \{}
+                \KeywordTok{strsplit}\NormalTok{(x, }\StringTok{"->"}\NormalTok{, }\DataTypeTok{fixed =} \NormalTok{T)[[}\DecValTok{1}\NormalTok{]]}
+            \NormalTok{\})))}
+        \KeywordTok{colnames}\NormalTok{(edgeFile_i) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"FromNode"}\NormalTok{, }\StringTok{"ToNode"}\NormalTok{)}
+        \NormalTok{PostProbFile_i <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\KeywordTok{paste}\NormalTok{(gitPath, }\StringTok{"data/"}\NormalTok{, dataset[datasetIndex], }
+            \StringTok{"_"}\NormalTok{, labels[index], }\StringTok{"_labeledEdges"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{), }\DataTypeTok{quote =} \StringTok{"}\CharTok{\textbackslash{}"}\StringTok{"}\NormalTok{, }
+            \DataTypeTok{comment.char =} \StringTok{""}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{header =} \NormalTok{F)}
+        \NormalTok{PostProbFile_i$Edge <-}\StringTok{ }\KeywordTok{unlist}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(PostProbFile_i$V1, }
+            \StringTok{" "}\NormalTok{), function(x) x[}\DecValTok{1}\NormalTok{]))}
+        \NormalTok{PostProbFile_i$PostProb <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(PostProbFile_i$V1, }
+            \StringTok{" [[]label="}\NormalTok{), function(x) }\KeywordTok{lapply}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(x[}\DecValTok{2}\NormalTok{], }
+            \StringTok{"[]];"}\NormalTok{), function(y) y[}\DecValTok{1}\NormalTok{]))))}
+        
+        \KeywordTok{assign}\NormalTok{(}\KeywordTok{paste}\NormalTok{(dataset[datasetIndex], labels[index], }\StringTok{"EdgeFile"}\NormalTok{, }
+            \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), edgeFile_i)}
+        \KeywordTok{assign}\NormalTok{(}\KeywordTok{paste}\NormalTok{(dataset[datasetIndex], }\StringTok{"PostProbFile"}\NormalTok{, labels[index], }
+            \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), PostProbFile_i)}
+    \NormalTok{\}}
+\NormalTok{\}}
+
+\KeywordTok{rm}\NormalTok{(index, edgeFile_i, PostProbFile_i)}
+
+\NormalTok{for (datasetIndex in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(dataset)) \{}
+    \KeywordTok{message}\NormalTok{(}\KeywordTok{paste}\NormalTok{(dataset[datasetIndex], }\StringTok{"running..."}\NormalTok{, }\DataTypeTok{sep =} \StringTok{" "}\NormalTok{))}
+    \NormalTok{edges_all <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \DecValTok{1}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{5}\NormalTok{))}
+    \KeywordTok{colnames}\NormalTok{(edges_all) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"node1"}\NormalTok{, }\StringTok{"node2"}\NormalTok{, }\StringTok{"postProb"}\NormalTok{, }\StringTok{"repRun"}\NormalTok{, }
+        \StringTok{"data_type"}\NormalTok{)}
+    
+    \NormalTok{if (datasetIndex <}\StringTok{ }\DecValTok{3}\NormalTok{) \{}
+        \NormalTok{labels <-}\StringTok{ }\NormalTok{FullLabels[-}\KeywordTok{grep}\NormalTok{(}\StringTok{"10_"}\NormalTok{, FullLabels)]}
+    \NormalTok{\} else \{}
+        \NormalTok{labels <-}\StringTok{ }\NormalTok{FullLabels}
+    \NormalTok{\}}
+    
+    \NormalTok{for (index in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(labels)) \{}
+        \NormalTok{edgeFile_i <-}\StringTok{ }\KeywordTok{get}\NormalTok{(}\KeywordTok{paste}\NormalTok{(dataset[datasetIndex], labels[index], }
+            \StringTok{"EdgeFile"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{))}
+        \NormalTok{edge_i <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(edgeFile_i$FromNode, edgeFile_i$ToNode, }
+            \DataTypeTok{sep =} \StringTok{"->"}\NormalTok{)}
+        \NormalTok{PostProbFile_i <-}\StringTok{ }\KeywordTok{get}\NormalTok{(}\KeywordTok{paste}\NormalTok{(dataset[datasetIndex], }\StringTok{"PostProbFile"}\NormalTok{, }
+            \NormalTok{labels[index], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{))}
+        \NormalTok{postProb <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(}\KeywordTok{substr}\NormalTok{(PostProbFile_i$PostProb[}\KeywordTok{match}\NormalTok{(edge_i, }
+            \NormalTok{PostProbFile_i$Edge)], }\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+        \NormalTok{node1 <-}\StringTok{ }\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(edge_i, }\StringTok{"->"}\NormalTok{), }
+            \NormalTok{function(x) x[}\DecValTok{1}\NormalTok{])))}
+        \NormalTok{node2 <-}\StringTok{ }\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(edge_i, }\StringTok{"->"}\NormalTok{), }
+            \NormalTok{function(x) x[}\DecValTok{2}\NormalTok{])))}
+        \NormalTok{repRun <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(labels[index], }\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{2}\NormalTok{]), }
+            \KeywordTok{length}\NormalTok{(edge_i))}
+        \NormalTok{data_type <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(labels[index], }\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{]), }
+            \KeywordTok{length}\NormalTok{(edge_i))}
+        \NormalTok{vect <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(node1, node2, postProb, repRun, data_type)}
+        \NormalTok{edges_all <-}\StringTok{ }\KeywordTok{rbind.data.frame}\NormalTok{(edges_all, vect)}
+    \NormalTok{\}}
+    \NormalTok{edges_all <-}\StringTok{ }\NormalTok{edges_all[-}\DecValTok{1}\NormalTok{, ]}
+    
+    \CommentTok{# Add the additional rows for all posterior probabilities}
+    \CommentTok{# below the actual value (so for postProb = 0.5, add row for}
+    \CommentTok{# 0.4, 0.3, 0.2, and 0.1)}
+    \NormalTok{postProbOptions <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.1}\NormalTok{)}
+    
+    \NormalTok{for (index in }\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(edges_all)) \{}
+        \NormalTok{postProb_i <-}\StringTok{ }\NormalTok{edges_all$postProb[index]}
+        \NormalTok{pos <-}\StringTok{ }\KeywordTok{which}\NormalTok{(postProbOptions ==}\StringTok{ }\NormalTok{postProb_i)}
+        
+        \NormalTok{tempEdgeFile <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+        \NormalTok{if (pos !=}\StringTok{ }\DecValTok{1}\NormalTok{) \{}
+            \NormalTok{for (i in }\DecValTok{1}\NormalTok{:(pos -}\StringTok{ }\DecValTok{1}\NormalTok{)) \{}
+                \NormalTok{tempEdgeFile <-}\StringTok{ }\KeywordTok{rbind}\NormalTok{(tempEdgeFile, edges_all[index, }
+                  \NormalTok{])}
+                \NormalTok{tempEdgeFile$postProb[}\KeywordTok{nrow}\NormalTok{(tempEdgeFile)] <-}\StringTok{ }\NormalTok{postProbOptions[i]}
+            \NormalTok{\}}
+            \NormalTok{edges_all <-}\StringTok{ }\KeywordTok{rbind.data.frame}\NormalTok{(edges_all, tempEdgeFile)}
+        \NormalTok{\}}
+    \NormalTok{\}}
+    \NormalTok{edges_all <-}\StringTok{ }\NormalTok{edges_all[}\KeywordTok{order}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(edges_all$data_type), }
+        \DataTypeTok{decreasing =} \OtherTok{TRUE}\NormalTok{), ]}
+    \NormalTok{edgesAll_filename <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(dataset[datasetIndex], }\StringTok{"_edges_all_RIMBAnet.RData"}\NormalTok{, }
+        \DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+    \KeywordTok{save}\NormalTok{(edges_all, }\DataTypeTok{file =} \NormalTok{edgesAll_filename)}
+    \KeywordTok{message}\NormalTok{(}\KeywordTok{paste}\NormalTok{(dataset[datasetIndex], }\StringTok{"complete!"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{" "}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Analysis Set-up:}\label{analysis-set-up}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{stringsAsFactors =} \NormalTok{F)}
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list =} \KeywordTok{ls}\NormalTok{())}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(reshape)}
+\KeywordTok{library}\NormalTok{(RCurl)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Load Functions}\label{load-functions}
+
+\subsubsection{summarySE Function}\label{summaryse-function}
+
+This function provides the count, mean, standard deviation, standard
+error of the mean, and confidence interval (default 95\%). The inputs
+for the functions are the following:
+
+\begin{itemize}
+\tightlist
+\item
+  data: a data frame.
+\item
+  measurevar: the name of a column that contains the variable to be
+  summariezed
+\item
+  groupvars: a vector containing names of columns that contain grouping
+  variables
+\item
+  na.rm: a boolean that indicates whether to ignore NA's
+\item
+  conf.interval: the percent range of the confidence interval (default
+  is 95\%)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{summarySE <-}\StringTok{ }\NormalTok{function(}\DataTypeTok{data =} \OtherTok{NULL}\NormalTok{, measurevar, }\DataTypeTok{groupvars =} \OtherTok{NULL}\NormalTok{, }
+    \DataTypeTok{na.rm =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{conf.interval =} \FloatTok{0.95}\NormalTok{, }\DataTypeTok{.drop =} \OtherTok{TRUE}\NormalTok{) \{}
+    \KeywordTok{library}\NormalTok{(plyr)}
+    
+    \CommentTok{# New version of length which can handle NA's: if na.rm==T,}
+    \CommentTok{# don't count them}
+    \NormalTok{length2 <-}\StringTok{ }\NormalTok{function(x, }\DataTypeTok{na.rm =} \OtherTok{FALSE}\NormalTok{) \{}
+        \NormalTok{if (na.rm) }
+            \KeywordTok{sum}\NormalTok{(!}\KeywordTok{is.na}\NormalTok{(x)) else }\KeywordTok{length}\NormalTok{(x)}
+    \NormalTok{\}}
+    
+    \CommentTok{# This does the summary. For each group's data frame, return}
+    \CommentTok{# a vector with N, mean, and sd}
+    \NormalTok{datac <-}\StringTok{ }\KeywordTok{ddply}\NormalTok{(data, groupvars, }\DataTypeTok{.drop =} \NormalTok{.drop, }\DataTypeTok{.fun =} \NormalTok{function(xx, }
+        \NormalTok{col) \{}
+        \KeywordTok{c}\NormalTok{(}\DataTypeTok{N =} \KeywordTok{length2}\NormalTok{(xx[[col]], }\DataTypeTok{na.rm =} \NormalTok{na.rm), }\DataTypeTok{mean =} \KeywordTok{mean}\NormalTok{(xx[[col]], }
+            \DataTypeTok{na.rm =} \NormalTok{na.rm), }\DataTypeTok{sd =} \KeywordTok{sd}\NormalTok{(xx[[col]], }\DataTypeTok{na.rm =} \NormalTok{na.rm))}
+    \NormalTok{\}, measurevar)}
+    
+    \CommentTok{# Rename the 'mean' column}
+    \NormalTok{datac <-}\StringTok{ }\KeywordTok{rename}\NormalTok{(datac, }\KeywordTok{c}\NormalTok{(}\DataTypeTok{mean =} \NormalTok{measurevar))}
+    
+    \NormalTok{datac$se <-}\StringTok{ }\NormalTok{datac$sd/}\KeywordTok{sqrt}\NormalTok{(datac$N)  }\CommentTok{# Calculate standard error of the mean}
+    
+    \CommentTok{# Confidence interval multiplier for standard error Calculate}
+    \CommentTok{# t-statistic for confidence interval: e.g., if conf.interval}
+    \CommentTok{# is .95, use .975 (above/below), and use df=N-1}
+    \NormalTok{ciMult <-}\StringTok{ }\KeywordTok{qt}\NormalTok{(conf.interval/}\DecValTok{2} \NormalTok{+}\StringTok{ }\FloatTok{0.5}\NormalTok{, datac$N -}\StringTok{ }\DecValTok{1}\NormalTok{)}
+    \NormalTok{datac$ci <-}\StringTok{ }\NormalTok{datac$se *}\StringTok{ }\NormalTok{ciMult}
+    
+    \KeywordTok{return}\NormalTok{(datac)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{get\_ABoverA\_directed (Figure
+2A)}\label{getux5faboveraux5fdirected-figure-2a}
+
+Given two networks A and B, obtain the fraction of edges in both A and B
+over the number of edges in A assuming fixed probability for edges in A
+and any edge in B.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{get_ABoverA_directed <-}\StringTok{ }\NormalTok{function(edges_all, A_name, B_name, prob, }
+    \DataTypeTok{sameProb =} \NormalTok{F) \{}
+    \NormalTok{if (A_name ==}\StringTok{ }\NormalTok{B_name) \{}
+        \NormalTok{if (sameProb) \{}
+            \NormalTok{aANDb =}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{intersect}\NormalTok{(edges_all$edge_name[edges_all$postProb ==}\StringTok{ }
+\StringTok{                }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all$type_name ==}\StringTok{ }\NormalTok{A_name], edges_all$edge_name[edges_all$postProb ==}\StringTok{ }
+\StringTok{                }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all$type_name !=}\StringTok{ }\NormalTok{B_name]))}
+        \NormalTok{\} else \{}
+            \NormalTok{aANDb =}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{intersect}\NormalTok{(edges_all$edge_name[edges_all$postProb ==}\StringTok{ }
+\StringTok{                }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all$type_name ==}\StringTok{ }\NormalTok{A_name], edges_all$edge_name[edges_all$type_name !=}\StringTok{ }
+\StringTok{                }\NormalTok{B_name]))}
+        \NormalTok{\}}
+    \NormalTok{\} else \{}
+        \NormalTok{if (sameProb) \{}
+            \NormalTok{aANDb =}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{intersect}\NormalTok{(edges_all$edge_name[edges_all$postProb ==}\StringTok{ }
+\StringTok{                }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all$type_name ==}\StringTok{ }\NormalTok{A_name], edges_all$edge_name[edges_all$postProb ==}\StringTok{ }
+\StringTok{                }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all$type_name ==}\StringTok{ }\NormalTok{B_name]))}
+        \NormalTok{\} else \{}
+            \NormalTok{aANDb =}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{intersect}\NormalTok{(edges_all$edge_name[edges_all$postProb ==}\StringTok{ }
+\StringTok{                }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all$type_name ==}\StringTok{ }\NormalTok{A_name], edges_all$edge_name[edges_all$type_name ==}\StringTok{ }
+\StringTok{                }\NormalTok{B_name]))}
+        \NormalTok{\}}
+    \NormalTok{\}}
+    \NormalTok{a =}\StringTok{ }\KeywordTok{sum}\NormalTok{(edges_all$postProb ==}\StringTok{ }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all$type_name ==}\StringTok{ }
+\StringTok{        }\NormalTok{A_name)}
+    \KeywordTok{return}\NormalTok{(aANDb/a)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Load in Data}\label{load-in-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Load in the data:}
+\KeywordTok{load}\NormalTok{(}\StringTok{"STARNET_edges_all_RIMBAnet.RData"}\NormalTok{)}
+\NormalTok{edges_all_starnet =}\StringTok{ }\NormalTok{edges_all}
+\KeywordTok{rm}\NormalTok{(edges_all)}
+\KeywordTok{load}\NormalTok{(}\StringTok{"GTEx_edges_all_RIMBAnet.RData"}\NormalTok{)}
+\NormalTok{edges_all_gtex =}\StringTok{ }\NormalTok{edges_all}
+\KeywordTok{rm}\NormalTok{(edges_all)}
+
+\NormalTok{## adding edge name:}
+\NormalTok{edges_all_starnet$edge_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_starnet$node1, }
+    \NormalTok{edges_all_starnet$node2, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_gtex$edge_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_gtex$node1, edges_all_gtex$node2, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{## adding type_name:}
+\NormalTok{edges_all_starnet$type_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_starnet$data_type, }
+    \NormalTok{edges_all_starnet$repRun, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_gtex$type_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_gtex$data_type, edges_all_gtex$repRun, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Analyses for Figures}\label{analyses-for-figures}
+
+\subsubsection{Figure 2A: Precision/Recall Plots for
+edges}\label{figure-2a-precisionrecall-plots-for-edges}
+
+Network A: Subsampling Network\\
+Network B: Complete Network (100\% Replicate 1)\\
+Precision = A \(\cap\) B / A\\
+Recall = A \(\cap\) B / B\\
+\includegraphics{PSB_RMarkdownGIT_files/figure-latex/Fig\%202A-1.pdf}
+
+\subsubsection{Figure 2B: Evaluation of Path
+Length}\label{figure-2b-evaluation-of-path-length}
+
+This code will prepare the data. It is highly advised that the code is
+run and resulting object is saved as it takes some time to run.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gtex_fn =}\StringTok{ "GTEx_edges_all_RIMBAnet.RData"}
+
+\KeywordTok{load}\NormalTok{(gtex_fn)}
+\KeywordTok{head}\NormalTok{(edges_all)}
+
+\NormalTok{real_network_all =}\StringTok{ }\NormalTok{edges_all[edges_all$repRun ==}\StringTok{ }\DecValTok{1} \NormalTok{&}\StringTok{ }\NormalTok{edges_all$data_type ==}\StringTok{ }
+\StringTok{    }\DecValTok{100}\NormalTok{, ]}
+\KeywordTok{dim}\NormalTok{(real_network_all)}
+
+\NormalTok{threads =}\StringTok{ }\DecValTok{18}
+\KeywordTok{library}\NormalTok{(foreach)}
+
+\KeywordTok{library}\NormalTok{(parallel)}
+\KeywordTok{library}\NormalTok{(doMC)}
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{cores =} \KeywordTok{detectCores}\NormalTok{())}
+\KeywordTok{registerDoMC}\NormalTok{(threads)}
+
+\NormalTok{path <-}\StringTok{ }\KeywordTok{getwd}\NormalTok{()}
+\NormalTok{all_out =}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{tests =}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{9}\NormalTok{, }\DecValTok{15}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{5} \NormalTok{*}\StringTok{ }\DecValTok{9}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{5} \NormalTok{*}\StringTok{ }\DecValTok{9}\NormalTok{), }\KeywordTok{rep}\NormalTok{(}\DecValTok{3}\NormalTok{, }
+    \DecValTok{5} \NormalTok{*}\StringTok{ }\DecValTok{9}\NormalTok{)), }\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{))}
+\KeywordTok{colnames}\NormalTok{(tests) =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"prob"}\NormalTok{, }\StringTok{"subsampling_idx"}\NormalTok{, }\StringTok{"repRun"}\NormalTok{)}
+
+\NormalTok{edgesInPath <-}\StringTok{ }\NormalTok{function(edgeList1, g2, path_length, }\DataTypeTok{directed =} \OtherTok{TRUE}\NormalTok{) \{}
+    
+    \NormalTok{if (!directed) \{}
+        \NormalTok{g2 =}\StringTok{ }\KeywordTok{as.undirected}\NormalTok{(g2)}
+    \NormalTok{\}}
+    
+    \NormalTok{InPath =}\StringTok{ }\KeywordTok{apply}\NormalTok{(edgeList1, }\DecValTok{1}\NormalTok{, function(x) \{}
+        \NormalTok{n1 =}\StringTok{ }\NormalTok{x[}\DecValTok{1}\NormalTok{]}
+        \NormalTok{n2 =}\StringTok{ }\NormalTok{x[}\DecValTok{2}\NormalTok{]}
+        
+        \NormalTok{if (}\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.element}\NormalTok{(}\KeywordTok{c}\NormalTok{(n1, n2), }\KeywordTok{V}\NormalTok{(g2)$name)) ==}\StringTok{ }\DecValTok{2}\NormalTok{) \{}
+            \NormalTok{p =}\StringTok{ }\KeywordTok{get.shortest.paths}\NormalTok{(g2, n1, n2)}
+            \NormalTok{l =}\StringTok{ }\KeywordTok{min}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(p$vpath, length)))}
+            
+            \NormalTok{if (l <=}\StringTok{ }\NormalTok{(path_length +}\StringTok{ }\DecValTok{1}\NormalTok{) &}\StringTok{ }\NormalTok{l !=}\StringTok{ }\DecValTok{0}\NormalTok{) \{}
+                \NormalTok{out =}\StringTok{ }\DecValTok{1}
+            \NormalTok{\} else \{}
+                \NormalTok{out =}\StringTok{ }\DecValTok{0}
+            \NormalTok{\}}
+        \NormalTok{\} else \{}
+            \NormalTok{out =}\StringTok{ }\DecValTok{0}
+        \NormalTok{\}}
+        \NormalTok{out}
+    \NormalTok{\})}
+    
+    \KeywordTok{return}\NormalTok{(InPath)}
+\NormalTok{\}}
+
+\NormalTok{compare_twoBN <-}\StringTok{ }\NormalTok{function(rand1, rand2, }\DataTypeTok{maxK =} \DecValTok{10}\NormalTok{, }\DataTypeTok{text =} \OtherTok{TRUE}\NormalTok{) \{}
+    \NormalTok{g1 <-}\StringTok{ }\KeywordTok{graph.edgelist}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(rand1))}
+    \NormalTok{g2 <-}\StringTok{ }\KeywordTok{graph.edgelist}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(rand2))}
+    
+    \KeywordTok{rownames}\NormalTok{(rand1) =}\StringTok{ }\KeywordTok{paste}\NormalTok{(rand1[, }\DecValTok{1}\NormalTok{], rand1[, }\DecValTok{2}\NormalTok{], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+    \KeywordTok{rownames}\NormalTok{(rand2) =}\StringTok{ }\KeywordTok{paste}\NormalTok{(rand2[, }\DecValTok{1}\NormalTok{], rand2[, }\DecValTok{2}\NormalTok{], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+    \NormalTok{out =}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+    
+    \NormalTok{for (i in }\DecValTok{1}\NormalTok{:maxK) \{}
+        \NormalTok{if (text) \{}
+            \KeywordTok{cat}\NormalTok{(}\StringTok{"on run path of"}\NormalTok{, i, }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+        \NormalTok{\}}
+        \NormalTok{e1_in_g2 =}\StringTok{ }\KeywordTok{edgesInPath}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(rand1), g2, i)}
+        \NormalTok{e2_in_g1 =}\StringTok{ }\KeywordTok{edgesInPath}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(rand2), g1, i)}
+        
+        \NormalTok{fracE1_in_G2 =}\StringTok{ }\KeywordTok{sum}\NormalTok{(e1_in_g2/}\KeywordTok{length}\NormalTok{(e1_in_g2))}
+        \NormalTok{fracE2_in_G1 =}\StringTok{ }\KeywordTok{sum}\NormalTok{(e2_in_g1/}\KeywordTok{length}\NormalTok{(e2_in_g1))}
+        
+        \NormalTok{e1_in_g2_undir =}\StringTok{ }\KeywordTok{edgesInPath}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(rand1), g2, i, }
+            \OtherTok{FALSE}\NormalTok{)}
+        \NormalTok{e2_in_g1_undir =}\StringTok{ }\KeywordTok{edgesInPath}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(rand2), g1, i, }
+            \OtherTok{FALSE}\NormalTok{)}
+        
+        \NormalTok{fracE1_in_G2_undir =}\StringTok{ }\KeywordTok{sum}\NormalTok{(e1_in_g2_undir/}\KeywordTok{length}\NormalTok{(e1_in_g2_undir))}
+        \NormalTok{fracE2_in_G1_undir =}\StringTok{ }\KeywordTok{sum}\NormalTok{(e2_in_g1_undir/}\KeywordTok{length}\NormalTok{(e2_in_g1_undir))}
+        
+        \NormalTok{out =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(out, }\KeywordTok{cbind}\NormalTok{(fracE1_in_G2, fracE2_in_G1, fracE1_in_G2_undir, }
+            \NormalTok{fracE2_in_G1_undir))}
+    \NormalTok{\}}
+    
+    \KeywordTok{rownames}\NormalTok{(out) =}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"path_"}\NormalTok{, }\DecValTok{1}\NormalTok{:maxK, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+    \KeywordTok{return}\NormalTok{(out)}
+\NormalTok{\}}
+
+\NormalTok{run_Network_comparisions <-}\StringTok{ }\NormalTok{function(edges_all, real_network, }
+    \DataTypeTok{probs =} \KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.1}\NormalTok{)) \{}
+    
+    \NormalTok{all =}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+    \NormalTok{for (prob in probs) \{}
+        \NormalTok{net =}\StringTok{ }\NormalTok{edges_all[edges_all$postProb ==}\StringTok{ }\NormalTok{prob, }\KeywordTok{c}\NormalTok{(}\StringTok{"node1"}\NormalTok{, }
+            \StringTok{"node2"}\NormalTok{)]}
+        \NormalTok{comp =}\StringTok{ }\KeywordTok{compare_twoBN}\NormalTok{(net, real_network, }\DataTypeTok{maxK =} \DecValTok{10}\NormalTok{, }\DataTypeTok{text =} \NormalTok{F)}
+        \NormalTok{comp =}\StringTok{ }\KeywordTok{as.data.frame.matrix}\NormalTok{(comp)}
+        \NormalTok{comp$post_prob_net1 =}\StringTok{ }\NormalTok{prob}
+        \NormalTok{comp$path =}\StringTok{ }\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(comp)}
+        \NormalTok{all =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(all, comp)}
+    \NormalTok{\}}
+    \KeywordTok{cat}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+    \KeywordTok{return}\NormalTok{(all)}
+\NormalTok{\}}
+
+\NormalTok{paths =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{90}\NormalTok{)}
+
+\NormalTok{## In parallel calculating all the different comparisions:}
+\NormalTok{all_out <-}\StringTok{ }\KeywordTok{foreach}\NormalTok{(}\DataTypeTok{i =} \DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(tests), }\DataTypeTok{combine =} \NormalTok{rbind) %dopar%}\StringTok{ }
+\StringTok{    }\NormalTok{\{}
+        \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"real network"}\NormalTok{, i, }\StringTok{"start time:"}\NormalTok{, }\KeywordTok{Sys.time}\NormalTok{()))}
+        \NormalTok{out =}\StringTok{ }\KeywordTok{run_Network_comparisions}\NormalTok{(edges_all[edges_all$data_type ==}\StringTok{ }
+\StringTok{            }\NormalTok{paths[tests[i, }\DecValTok{2}\NormalTok{]] &}\StringTok{ }\NormalTok{edges_all$repRun ==}\StringTok{ }\NormalTok{tests[i, }
+            \DecValTok{3}\NormalTok{], ], real_network_all[real_network_all$postProb ==}\StringTok{ }
+\StringTok{            }\NormalTok{tests[i, }\DecValTok{1}\NormalTok{]/}\DecValTok{10}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\StringTok{"node1"}\NormalTok{, }\StringTok{"node2"}\NormalTok{)])}
+        
+        \NormalTok{out$Name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(paths[tests[i, }\DecValTok{2}\NormalTok{]], tests[i, }\DecValTok{3}\NormalTok{], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+        \NormalTok{out$post_prob_net2 =}\StringTok{ }\NormalTok{tests[i, }\DecValTok{1}\NormalTok{]/}\DecValTok{10}
+        \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"real netowrk"}\NormalTok{, i, }\StringTok{"end time:"}\NormalTok{, }\KeywordTok{Sys.time}\NormalTok{()))}
+        
+        \NormalTok{out}
+    \NormalTok{\}}
+
+\NormalTok{results =}\StringTok{ }\KeywordTok{do.call}\NormalTok{(rbind, all_out)}
+\KeywordTok{save}\NormalTok{(results, }\DataTypeTok{file =} \StringTok{"Fig2B_GTEx_updated.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We are not displaying the figure here, however, below is the code to
+generate Figure 2B:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\StringTok{"Fig2B_GTEx_updated.RData"}\NormalTok{)}
+
+\NormalTok{results$name =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(results$Name, function(x) \{}
+    \KeywordTok{paste}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(x, }\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{], }\DataTypeTok{collapse =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{\})}
+\NormalTok{results$repRun =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(results$Name, function(x) \{}
+    \KeywordTok{paste}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(x, }\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{2}\NormalTok{], }\DataTypeTok{collapse =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{\})}
+\NormalTok{results =}\StringTok{ }\NormalTok{results[, }\KeywordTok{colnames}\NormalTok{(results) !=}\StringTok{ "Name"}\NormalTok{]}
+\NormalTok{results =}\StringTok{ }\NormalTok{results[, }\KeywordTok{colnames}\NormalTok{(results) !=}\StringTok{ "fracE1_in_G2_undir"}\NormalTok{]}
+\NormalTok{results =}\StringTok{ }\NormalTok{results[, }\KeywordTok{colnames}\NormalTok{(results) !=}\StringTok{ "fracE2_in_G1_undir"}\NormalTok{]}
+
+\NormalTok{melted_data =}\StringTok{ }\KeywordTok{melt}\NormalTok{(results, }\DataTypeTok{id =} \KeywordTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{, }\StringTok{"path"}\NormalTok{, }\StringTok{"post_prob_net2"}\NormalTok{, }
+    \StringTok{"post_prob_net1"}\NormalTok{, }\StringTok{"repRun"}\NormalTok{))}
+\NormalTok{melted_data$path =}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(melted_data$path)}
+
+\NormalTok{melted_data$post_prob_net1_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"SubSampling Posterior: "}\NormalTok{, }
+    \NormalTok{melted_data$post_prob_net1, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+\NormalTok{melted_data$post_prob_net2_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"Real Posterior: "}\NormalTok{, melted_data$post_prob_net2, }
+    \DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+\NormalTok{ggplotDF =}\StringTok{ }\NormalTok{melted_data[melted_data$variable ==}\StringTok{ "fracE1_in_G2"} \NormalTok{&}\StringTok{ }
+\StringTok{    }\KeywordTok{is.element}\NormalTok{(melted_data$post_prob_net1_name, }\KeywordTok{c}\NormalTok{(}\StringTok{"SubSampling Posterior: 0.1"}\NormalTok{, }
+        \StringTok{"SubSampling Posterior: 0.5"}\NormalTok{, }\StringTok{"SubSampling Posterior: 0.9"}\NormalTok{)), }
+    \NormalTok{]}
+
+\NormalTok{ggplotDF2 =}\StringTok{ }\NormalTok{ggplotDF[}\KeywordTok{is.element}\NormalTok{(ggplotDF$post_prob_net2, }\KeywordTok{c}\NormalTok{(}\StringTok{"0.1"}\NormalTok{, }
+    \StringTok{"0.5"}\NormalTok{, }\StringTok{"0.9"}\NormalTok{)), ]}
+
+\NormalTok{ggplotDF2_summary <-}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(ggplotDF2, }\StringTok{"value"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{, }
+    \StringTok{"path"}\NormalTok{, }\StringTok{"post_prob_net1"}\NormalTok{, }\StringTok{"post_prob_net2"}\NormalTok{))}
+\NormalTok{ggplotDF2_summary$path =}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(ggplotDF2_summary$path))}
+
+\NormalTok{ggplotDF2_summary$post_prob_net1_name =}\StringTok{ }\KeywordTok{as.character}\NormalTok{(ggplotDF2_summary$post_prob_net1)}
+\NormalTok{ggplotDF2_summary$post_prob_net2_name =}\StringTok{ }\KeywordTok{as.character}\NormalTok{(ggplotDF2_summary$post_prob_net2)}
+
+\NormalTok{fig_2b_gtex <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(ggplotDF2_summary, }\KeywordTok{aes}\NormalTok{(path)) +}\StringTok{ }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \NormalTok{value, }
+    \DataTypeTok{colour =} \NormalTok{post_prob_net2_name)) +}\StringTok{ }\KeywordTok{geom_ribbon}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin =} \NormalTok{value -}\StringTok{ }
+\StringTok{    }\NormalTok{sd, }\DataTypeTok{ymax =} \NormalTok{value +}\StringTok{ }\NormalTok{sd, }\DataTypeTok{fill =} \NormalTok{post_prob_net2_name), }\DataTypeTok{alpha =} \FloatTok{0.8}\NormalTok{) +}\StringTok{ }
+\StringTok{    }\KeywordTok{facet_wrap}\NormalTok{(~name +}\StringTok{ }\NormalTok{post_prob_net1_name, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{) +}\StringTok{ }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Path Length"}\NormalTok{) +}\StringTok{ }
+\StringTok{    }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"green"}\NormalTok{, }\StringTok{"grey50"}\NormalTok{)) +}\StringTok{ }
+\StringTok{    }\KeywordTok{scale_fill_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{"orange"}\NormalTok{, }\StringTok{"green"}\NormalTok{, }\StringTok{"grey50"}\NormalTok{)) +}\StringTok{ }
+\StringTok{    }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Fraction of SubSampling Edges in Real BN at Different SubSamping Thresholds"}\NormalTok{) +}\StringTok{ }
+\StringTok{    }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text.x =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{12}\NormalTok{), }\DataTypeTok{title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{16}\NormalTok{)) +}\StringTok{ }
+\StringTok{    }\KeywordTok{theme_bw}\NormalTok{() +}\StringTok{ }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \DecValTok{1}\NormalTok{:}\DecValTok{10}\NormalTok{)}
+\KeywordTok{show}\NormalTok{(fig_2b_gtex)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Figure 2C: Clique Associates for Various Correlation
+Cutoffs for
+Edges}\label{figure-2c-clique-associates-for-various-correlation-cutoffs-for-edges}
+
+Create Edge files based on correlation thresholds
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dataFlag <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"GTEx"}\NormalTok{, }\StringTok{"STARNET"}\NormalTok{)}
+
+\NormalTok{subSets <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{50}\NormalTok{)}
+\NormalTok{replicates <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{)}
+
+\NormalTok{labels <-}\StringTok{ }\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{sapply}\NormalTok{(subSets, function(x) }\KeywordTok{sapply}\NormalTok{(replicates, }
+    \NormalTok{function(y) }\KeywordTok{paste}\NormalTok{(x, y, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{))))}
+
+\NormalTok{dataFN <-}\StringTok{ }\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{sapply}\NormalTok{(dataFlag, function(x) }\KeywordTok{sapply}\NormalTok{(labels, }
+    \NormalTok{function(y) }\KeywordTok{paste}\NormalTok{(x, y, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{))))}
+
+
+\NormalTok{for (labelsTagIndex in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(dataFN)) \{}
+    \NormalTok{labelsTag <-}\StringTok{ }\NormalTok{dataFN[labelsTagIndex]}
+    \NormalTok{for (cutoff in }\KeywordTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.05}\NormalTok{, }\FloatTok{0.01}\NormalTok{)) \{}
+        \KeywordTok{message}\NormalTok{(}\KeywordTok{paste}\NormalTok{(dataSet, }\StringTok{"-"}\NormalTok{, cutoff, }\StringTok{"-"}\NormalTok{, labelsTag, }\StringTok{"running..."}\NormalTok{))}
+        \NormalTok{data =}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\KeywordTok{paste}\NormalTok{(gitPath, }\StringTok{"RIMBAnetInput/"}\NormalTok{, dataSet, }
+            \StringTok{"_"}\NormalTok{, labelsTag, }\StringTok{"_BC.txt"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{), }\DataTypeTok{quote =} \StringTok{"}\CharTok{\textbackslash{}"}\StringTok{"}\NormalTok{, }
+            \DataTypeTok{comment.char =} \StringTok{""}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{row.names =} \DecValTok{1}\NormalTok{)}
+        \NormalTok{cor_data =}\StringTok{ }\KeywordTok{cor}\NormalTok{(}\KeywordTok{t}\NormalTok{(data))^}\DecValTok{2}
+        
+        \NormalTok{rsqrd_cutoff =}\StringTok{ }\KeywordTok{quantile}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(cor_data[}\KeywordTok{upper.tri}\NormalTok{(cor_data)]), }
+            \DecValTok{1} \NormalTok{-}\StringTok{ }\NormalTok{cutoff)}
+        
+        \NormalTok{keep_edges =}\StringTok{ }\KeywordTok{which}\NormalTok{(cor_data >=}\StringTok{ }\NormalTok{rsqrd_cutoff, }\DataTypeTok{arr.ind =} \NormalTok{T)}
+        
+        \NormalTok{edges =}\StringTok{ }\KeywordTok{t}\NormalTok{(}\KeywordTok{apply}\NormalTok{(keep_edges, }\DecValTok{1}\NormalTok{, function(X) \{}
+            \NormalTok{t =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{rownames}\NormalTok{(cor_data)[X[}\DecValTok{1}\NormalTok{]], }\KeywordTok{rownames}\NormalTok{(cor_data)[X[}\DecValTok{2}\NormalTok{]])}
+            \NormalTok{t[}\KeywordTok{order}\NormalTok{(t)]}
+        \NormalTok{\}))}
+        
+        \NormalTok{edges =}\StringTok{ }\KeywordTok{unique}\NormalTok{(edges)}
+        \NormalTok{edges =}\StringTok{ }\NormalTok{edges[edges[, }\DecValTok{1}\NormalTok{] !=}\StringTok{ }\NormalTok{edges[, }\DecValTok{2}\NormalTok{], ]}
+        \KeywordTok{write.table}\NormalTok{(edges, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\DataTypeTok{quote =} \NormalTok{F, }\DataTypeTok{col.names =} \NormalTok{F, }
+            \DataTypeTok{row.names =} \NormalTok{F, }\DataTypeTok{file =} \KeywordTok{paste}\NormalTok{(dataSet, labelsTag, }\StringTok{"_"}\NormalTok{, }
+                \NormalTok{cutoff, }\StringTok{"_topCorEdges.txt"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{))}
+    \NormalTok{\}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+We feed the resulting edge files into the COS program to determine which
+edges have both nodes in a single clique. The code below parses the
+results from COS and saves the cliques into a list for each dataset,
+GTEx and STARNET.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{subSets <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{50}\NormalTok{)}
+\NormalTok{replicates <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{)}
+\NormalTok{postProbs <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.1}\NormalTok{))}
+\NormalTok{thresholds <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{0.01}\NormalTok{, }\FloatTok{0.05}\NormalTok{, }\FloatTok{0.1}\NormalTok{)}
+\NormalTok{datasets <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"GTEx"}\NormalTok{, }\StringTok{"STARNET"}\NormalTok{)}
+
+\NormalTok{labels <-}\StringTok{ }\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{sapply}\NormalTok{(subSets, function(x) }\KeywordTok{sapply}\NormalTok{(replicates, }
+    \NormalTok{function(y) }\KeywordTok{sapply}\NormalTok{(thresholds, function(z) }\KeywordTok{paste}\NormalTok{(x, y, z, }
+        \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)))))}
+
+\NormalTok{for (datasetIndex in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(datasets)) \{}
+    \KeywordTok{message}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"running..."}\NormalTok{))}
+    \NormalTok{MappedCliques_i <-}\StringTok{ }\KeywordTok{vector}\NormalTok{(}\StringTok{"list"}\NormalTok{, }\KeywordTok{length}\NormalTok{(labels))}
+    
+    \NormalTok{for (index in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(labels)) \{}
+        \NormalTok{cliqueMap_i <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }
+            \StringTok{"_"}\NormalTok{, labels[index], }\StringTok{"_topCorEdges.txt.map"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{), }
+            \DataTypeTok{quote =} \StringTok{"}\CharTok{\textbackslash{}"}\StringTok{"}\NormalTok{, }\DataTypeTok{comment.char =} \StringTok{""}\NormalTok{)}
+        
+        \NormalTok{filename <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], labels[index], }
+            \StringTok{"MappedCliques"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+        
+        \NormalTok{if (}\KeywordTok{file.exists}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"_"}\NormalTok{, labels[index], }
+            \StringTok{"_topCorEdges.txt.mcliques_3_communities.txt"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{))) \{}
+            \NormalTok{cliqueCommunity_i <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }
+                \StringTok{"_"}\NormalTok{, labels[index], }\StringTok{"_topCorEdges.txt.mcliques_3_communities.txt"}\NormalTok{, }
+                \DataTypeTok{sep =} \StringTok{""}\NormalTok{), }\DataTypeTok{quote =} \StringTok{"}\CharTok{\textbackslash{}"}\StringTok{"}\NormalTok{, }\DataTypeTok{comment.char =} \StringTok{""}\NormalTok{, }\DataTypeTok{fill =} \OtherTok{TRUE}\NormalTok{)}
+            
+            \CommentTok{# First column is not delimited properly, so need to split}
+            \CommentTok{# the label out:}
+            \NormalTok{cliqueCommunity_i$V1 <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(}\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(}\KeywordTok{lapply}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(cliqueCommunity_i$V1, }
+                \StringTok{":"}\NormalTok{), function(x) x[}\DecValTok{2}\NormalTok{]))))}
+            
+            \NormalTok{mappedCliques <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(cliqueCommunity_i, }\DecValTok{2}\NormalTok{, function(x) cliqueMap_i$V1[}\KeywordTok{match}\NormalTok{(x, }
+                \NormalTok{cliqueMap_i$V2)])}
+            \CommentTok{# Store the mapped cliques locally in R workspace}
+            
+            \KeywordTok{assign}\NormalTok{(filename, mappedCliques)}
+            
+            \CommentTok{# Store the mapped cliques into a list}
+            \NormalTok{MappedCliques_i[[index]] <-}\StringTok{ }\NormalTok{mappedCliques}
+        \NormalTok{\}}
+        \KeywordTok{names}\NormalTok{(MappedCliques_i)[[index]] <-}\StringTok{ }\NormalTok{filename}
+    \NormalTok{\}}
+    
+    \CommentTok{# Save RData file}
+    \KeywordTok{save}\NormalTok{(MappedCliques_i, }\DataTypeTok{file =} \KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }
+        \StringTok{"_MappedCliquesList.RData"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{))}
+    \KeywordTok{message}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"Complete!"}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Once cliques are called, add a flag for each edge as to whether both
+nodes are found in the same clique. The results from this code should be
+saved and then loaded back in.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{stringsAsFactors =} \NormalTok{F)}
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list =} \KeywordTok{ls}\NormalTok{())}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(reshape)}
+
+\NormalTok{gitPath <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/divara01/PSB2017_ReproducibilityOfBNs/"}\NormalTok{)}
+
+\NormalTok{inclique <-}\StringTok{ }\NormalTok{function(Clique_list, name, node1, node2) \{}
+    \NormalTok{cliques <-}\StringTok{ }\NormalTok{Clique_list[[name]]}
+    \NormalTok{if (}\KeywordTok{class}\NormalTok{(cliques) ==}\StringTok{ "character"}\NormalTok{) \{}
+        \NormalTok{cliques =}\StringTok{ }\KeywordTok{matrix}\NormalTok{(cliques, }\DataTypeTok{nrow =} \DecValTok{1}\NormalTok{)}
+    \NormalTok{\}}
+    \NormalTok{if (}\KeywordTok{length}\NormalTok{(cliques) ==}\StringTok{ }\DecValTok{0}\NormalTok{) \{}
+        \KeywordTok{cat}\NormalTok{(}\StringTok{"this run has NO cliques,"}\NormalTok{, name, }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+        \KeywordTok{return}\NormalTok{(}\OtherTok{FALSE}\NormalTok{)}
+    \NormalTok{\}}
+    \NormalTok{pos_n1 <-}\StringTok{ }\KeywordTok{which}\NormalTok{(!}\KeywordTok{is.na}\NormalTok{(}\KeywordTok{apply}\NormalTok{(cliques, }\DecValTok{1}\NormalTok{, function(x) }\KeywordTok{match}\NormalTok{(node1, }
+        \NormalTok{x))))}
+    \NormalTok{pos_n2 <-}\StringTok{ }\KeywordTok{which}\NormalTok{(!}\KeywordTok{is.na}\NormalTok{(}\KeywordTok{apply}\NormalTok{(cliques, }\DecValTok{1}\NormalTok{, function(x) }\KeywordTok{match}\NormalTok{(node2, }
+        \NormalTok{x))))}
+    \NormalTok{cliquesContainingBothNodes <-}\StringTok{ }\KeywordTok{intersect}\NormalTok{(pos_n1, pos_n2)}
+    
+    \NormalTok{if (}\KeywordTok{length}\NormalTok{(cliquesContainingBothNodes) >}\StringTok{ }\DecValTok{0}\NormalTok{) \{}
+        \KeywordTok{return}\NormalTok{(}\OtherTok{TRUE}\NormalTok{)}
+    \NormalTok{\} else \{}
+        \KeywordTok{return}\NormalTok{(}\OtherTok{FALSE}\NormalTok{)}
+    \NormalTok{\}}
+\NormalTok{\}}
+
+\NormalTok{## loading Clique List}
+\KeywordTok{load}\NormalTok{(}\KeywordTok{paste}\NormalTok{(gitPath, }\StringTok{"COSresults/STARNET_MappedCliquesList.RData"}\NormalTok{, }
+    \DataTypeTok{sep =} \StringTok{""}\NormalTok{))}
+\NormalTok{## loading edges_all}
+\KeywordTok{load}\NormalTok{(}\StringTok{"STARNET_edges_all_RIMBAnet.RData"}\NormalTok{)}
+
+\NormalTok{CompleteCliqueFlag <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \KeywordTok{nrow}\NormalTok{(edges_all), }
+    \DataTypeTok{ncol =} \DecValTok{3}\NormalTok{))}
+\KeywordTok{colnames}\NormalTok{(CompleteCliqueFlag) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"0.01"}\NormalTok{, }\StringTok{"0.05"}\NormalTok{, }\StringTok{"0.1"}\NormalTok{)}
+
+\NormalTok{for (cutOffIndex in }\DecValTok{1}\NormalTok{:}\KeywordTok{ncol}\NormalTok{(CompleteCliqueFlag)) \{}
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\KeywordTok{colnames}\NormalTok{(CompleteCliqueFlag)[cutOffIndex], }\StringTok{" Running..."}\NormalTok{, }
+        \DataTypeTok{sep =} \StringTok{""}\NormalTok{))}
+    
+    \NormalTok{CompleteCliqueFlag[, cutOffIndex] <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(edges_all), }
+        \NormalTok{function(x) \{}
+            \NormalTok{MappedName =}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"STARNET"}\NormalTok{, edges_all$data_type[x], }
+                \NormalTok{edges_all$repRun[x], }\KeywordTok{colnames}\NormalTok{(CompleteCliqueFlag)[cutOffIndex], }
+                \StringTok{"MappedCliques"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+            \KeywordTok{inclique}\NormalTok{(MappedCliques_i, MappedName, edges_all$node1[x], }
+                \NormalTok{edges_all$node2[x])}
+        \NormalTok{\})}
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\KeywordTok{colnames}\NormalTok{(CompleteCliqueFlag)[cutOffIndex], }\StringTok{" Complete!"}\NormalTok{, }
+        \DataTypeTok{sep =} \StringTok{""}\NormalTok{))}
+\NormalTok{\}}
+
+\KeywordTok{colnames}\NormalTok{(CompleteCliqueFlag) <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"inClique"}\NormalTok{, }\KeywordTok{colnames}\NormalTok{(CompleteCliqueFlag), }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all <-}\StringTok{ }\KeywordTok{cbind.data.frame}\NormalTok{(edges_all, CompleteCliqueFlag)}
+
+\NormalTok{edges_all$inClique_0}\FloatTok{.1} \NormalTok{<-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(edges_all$inClique_0}\FloatTok{.1} \NormalTok{+}\StringTok{ }
+\StringTok{    }\DecValTok{0}\NormalTok{)}
+\NormalTok{edges_all$inClique_0}\FloatTok{.05} \NormalTok{<-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(edges_all$inClique_0}\FloatTok{.05} \NormalTok{+}\StringTok{ }
+\StringTok{    }\DecValTok{0}\NormalTok{)}
+\NormalTok{edges_all$inClique_0}\FloatTok{.01} \NormalTok{<-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(edges_all$inClique_0}\FloatTok{.01} \NormalTok{+}\StringTok{ }
+\StringTok{    }\DecValTok{0}\NormalTok{)}
+
+\KeywordTok{save}\NormalTok{(edges_all, }\DataTypeTok{file =} \StringTok{"STARNET_edges_all_RIMBAnet_cliqueAdded.RData"}\NormalTok{)}
+
+\NormalTok{## GTEx:}
+\KeywordTok{load}\NormalTok{(}\KeywordTok{paste}\NormalTok{(gitPath, }\StringTok{"COSresults/GTEx_MappedCliquesList.RData"}\NormalTok{, }
+    \DataTypeTok{sep =} \StringTok{""}\NormalTok{))}
+\KeywordTok{load}\NormalTok{(}\StringTok{"GTEx_edges_all_RIMBAnet.RData"}\NormalTok{)}
+
+\NormalTok{CompleteCliqueFlag <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \KeywordTok{nrow}\NormalTok{(edges_all), }
+    \DataTypeTok{ncol =} \DecValTok{3}\NormalTok{))}
+\KeywordTok{colnames}\NormalTok{(CompleteCliqueFlag) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"0.01"}\NormalTok{, }\StringTok{"0.05"}\NormalTok{, }\StringTok{"0.1"}\NormalTok{)}
+
+\NormalTok{for (cutOffIndex in }\DecValTok{1}\NormalTok{:}\KeywordTok{ncol}\NormalTok{(CompleteCliqueFlag)) \{}
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\KeywordTok{colnames}\NormalTok{(CompleteCliqueFlag)[cutOffIndex], }\StringTok{" Running..."}\NormalTok{, }
+        \DataTypeTok{sep =} \StringTok{""}\NormalTok{))}
+    \NormalTok{CompleteCliqueFlag[, cutOffIndex] <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(edges_all), }
+        \NormalTok{function(x) \{}
+            \NormalTok{MappedName =}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"GTEx"}\NormalTok{, edges_all$data_type[x], }
+                \NormalTok{edges_all$repRun[x], }\KeywordTok{colnames}\NormalTok{(CompleteCliqueFlag)[cutOffIndex], }
+                \StringTok{"MappedCliques"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+            \KeywordTok{inclique}\NormalTok{(MappedCliques_i, MappedName, edges_all$node1[x], }
+                \NormalTok{edges_all$node2[x])}
+        \NormalTok{\})}
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\KeywordTok{colnames}\NormalTok{(CompleteCliqueFlag)[cutOffIndex], }\StringTok{" Complete!"}\NormalTok{, }
+        \DataTypeTok{sep =} \StringTok{""}\NormalTok{))}
+\NormalTok{\}}
+
+\KeywordTok{colnames}\NormalTok{(CompleteCliqueFlag) <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"inClique"}\NormalTok{, }\KeywordTok{colnames}\NormalTok{(CompleteCliqueFlag), }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all <-}\StringTok{ }\KeywordTok{cbind.data.frame}\NormalTok{(edges_all, CompleteCliqueFlag)}
+
+\NormalTok{edges_all$inClique_0}\FloatTok{.1} \NormalTok{<-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(edges_all$inClique_0}\FloatTok{.1} \NormalTok{+}\StringTok{ }
+\StringTok{    }\DecValTok{0}\NormalTok{)}
+\NormalTok{edges_all$inClique_0}\FloatTok{.05} \NormalTok{<-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(edges_all$inClique_0}\FloatTok{.05} \NormalTok{+}\StringTok{ }
+\StringTok{    }\DecValTok{0}\NormalTok{)}
+\NormalTok{edges_all$inClique_0}\FloatTok{.01} \NormalTok{<-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(edges_all$inClique_0}\FloatTok{.01} \NormalTok{+}\StringTok{ }
+\StringTok{    }\DecValTok{0}\NormalTok{)}
+
+\KeywordTok{save}\NormalTok{(edges_all, }\DataTypeTok{file =} \StringTok{"GTEx_edges_all_RIMBAnet_cliqueAdded.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+We are not displaying the figure here, however, below is the code to
+generate Figure 2C:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\StringTok{"STARNET_edges_all_RIMBAnet_cliqueAdded.RData"}\NormalTok{)}
+\NormalTok{edges_all_starnet =}\StringTok{ }\NormalTok{edges_all}
+\KeywordTok{rm}\NormalTok{(edges_all)}
+\KeywordTok{load}\NormalTok{(}\StringTok{"GTEx_edges_all_RIMBAnet_cliqueAdded.RData"}\NormalTok{)}
+\NormalTok{edges_all_gtex =}\StringTok{ }\NormalTok{edges_all}
+\NormalTok{edges_all_gtex$inClique_0}\FloatTok{.1} \NormalTok{=}\StringTok{ }\NormalTok{edges_all_gtex$inClique_0}\FloatTok{.1} \NormalTok{+}\StringTok{ }\DecValTok{0}
+\KeywordTok{rm}\NormalTok{(edges_all)}
+
+\NormalTok{edges_all_starnet$edge_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_starnet$node1, }
+    \NormalTok{edges_all_starnet$node2, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_gtex$edge_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_gtex$node1, edges_all_gtex$node2, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+
+\NormalTok{fraction_tp_fp_fn <-}\StringTok{ }\NormalTok{function(edges_all, name, }\DataTypeTok{complete_name =} \StringTok{"100_1"}\NormalTok{, }
+    \NormalTok{prob, clique_col, }\DataTypeTok{In_clique =} \DecValTok{0}\NormalTok{) \{}
+    \NormalTok{tp =}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{intersect}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$edge_name[edges_all$name ==}\StringTok{ }
+\StringTok{        }\NormalTok{complete_name]), edges_all$edge_name[edges_all$name ==}\StringTok{ }
+\StringTok{        }\NormalTok{name &}\StringTok{ }\NormalTok{edges_all$prob ==}\StringTok{ }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all[, clique_col] ==}\StringTok{ }
+\StringTok{        }\NormalTok{In_clique]))}
+    \NormalTok{fp =}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{setdiff}\NormalTok{(edges_all$edge_name[edges_all$name ==}\StringTok{ }
+\StringTok{        }\NormalTok{name &}\StringTok{ }\NormalTok{edges_all$prob ==}\StringTok{ }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all[, clique_col] ==}\StringTok{ }
+\StringTok{        }\NormalTok{In_clique], }\KeywordTok{unique}\NormalTok{(edges_all$edge_name[edges_all$name ==}\StringTok{ }
+\StringTok{        }\NormalTok{complete_name])))}
+    \NormalTok{fn =}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{setdiff}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$edge_name[edges_all$name ==}\StringTok{ }
+\StringTok{        }\NormalTok{complete_name]), edges_all$edge_name[edges_all$name ==}\StringTok{ }
+\StringTok{        }\NormalTok{name &}\StringTok{ }\NormalTok{edges_all$prob ==}\StringTok{ }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all[, clique_col] ==}\StringTok{ }
+\StringTok{        }\NormalTok{In_clique]))}
+    \KeywordTok{return}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{TP =} \NormalTok{tp, }\DataTypeTok{FP =} \NormalTok{fp, }\DataTypeTok{FN =} \NormalTok{fn))}
+\NormalTok{\}}
+
+\NormalTok{edges_all_starnet$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_starnet$data_type, edges_all_starnet$repRun, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_gtex$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_gtex$data_type, edges_all_gtex$repRun, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_starnet$prob =}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(edges_all_starnet$postProb))}
+\NormalTok{edges_all_gtex$prob =}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(edges_all_gtex$postProb))}
+
+\NormalTok{fig_2c_data =}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{for (prob in }\KeywordTok{unique}\NormalTok{(edges_all_starnet$prob)) \{}
+    \CommentTok{# cat('----',prob,'----\textbackslash{}n')}
+    \NormalTok{for (subsampling in }\KeywordTok{c}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{100}\NormalTok{)) \{}
+        \NormalTok{for (rep in }\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{) \{}
+            \NormalTok{for (clique_col in }\KeywordTok{c}\NormalTok{(}\StringTok{"inClique_0.01"}\NormalTok{, }\StringTok{"inClique_0.05"}\NormalTok{, }
+                \StringTok{"inClique_0.1"}\NormalTok{)) \{}
+                
+                \NormalTok{gtex_NoClique =}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{prob =} \NormalTok{prob, }
+                  \DataTypeTok{name =} \NormalTok{subsampling, }\DataTypeTok{run =} \NormalTok{rep, }\DataTypeTok{Data_source =} \StringTok{"GTEx"}\NormalTok{, }
+                  \DataTypeTok{clique =} \NormalTok{clique_col, }\DataTypeTok{InClique =} \StringTok{"No"}\NormalTok{), }\KeywordTok{fraction_tp_fp_fn}\NormalTok{(edges_all_gtex, }
+                  \KeywordTok{paste}\NormalTok{(subsampling, rep, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\StringTok{"100_1"}\NormalTok{, }
+                  \NormalTok{prob, clique_col, }\DecValTok{0}\NormalTok{))}
+                \NormalTok{gtex_YesClique =}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{prob =} \NormalTok{prob, }
+                  \DataTypeTok{name =} \NormalTok{subsampling, }\DataTypeTok{run =} \NormalTok{rep, }\DataTypeTok{Data_source =} \StringTok{"GTEx"}\NormalTok{, }
+                  \DataTypeTok{clique =} \NormalTok{clique_col, }\DataTypeTok{InClique =} \StringTok{"Yes"}\NormalTok{), }\KeywordTok{fraction_tp_fp_fn}\NormalTok{(edges_all_gtex, }
+                  \KeywordTok{paste}\NormalTok{(subsampling, rep, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\StringTok{"100_1"}\NormalTok{, }
+                  \NormalTok{prob, clique_col, }\DecValTok{1}\NormalTok{))}
+                
+                \NormalTok{starnet_NoClique =}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{prob =} \NormalTok{prob, }
+                  \DataTypeTok{name =} \NormalTok{subsampling, }\DataTypeTok{run =} \NormalTok{rep, }\DataTypeTok{Data_source =} \StringTok{"STARNET"}\NormalTok{, }
+                  \DataTypeTok{clique =} \NormalTok{clique_col, }\DataTypeTok{InClique =} \StringTok{"No"}\NormalTok{), }\KeywordTok{fraction_tp_fp_fn}\NormalTok{(edges_all_starnet, }
+                  \KeywordTok{paste}\NormalTok{(subsampling, rep, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\StringTok{"100_1"}\NormalTok{, }
+                  \NormalTok{prob, clique_col, }\DecValTok{0}\NormalTok{))}
+                \NormalTok{starnet_YesClique =}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{prob =} \NormalTok{prob, }
+                  \DataTypeTok{name =} \NormalTok{subsampling, }\DataTypeTok{run =} \NormalTok{rep, }\DataTypeTok{Data_source =} \StringTok{"STARNET"}\NormalTok{, }
+                  \DataTypeTok{clique =} \NormalTok{clique_col, }\DataTypeTok{InClique =} \StringTok{"Yes"}\NormalTok{), }\KeywordTok{fraction_tp_fp_fn}\NormalTok{(edges_all_starnet, }
+                  \KeywordTok{paste}\NormalTok{(subsampling, rep, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\StringTok{"100_1"}\NormalTok{, }
+                  \NormalTok{prob, clique_col, }\DecValTok{1}\NormalTok{))}
+                \NormalTok{fig_2c_data =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(fig_2c_data, gtex_NoClique, }
+                  \NormalTok{gtex_YesClique, starnet_NoClique, starnet_YesClique)}
+            \NormalTok{\}}
+        \NormalTok{\}}
+    \NormalTok{\}}
+\NormalTok{\}}
+
+\NormalTok{fig_2c_data$precision =}\StringTok{ }\NormalTok{fig_2c_data$TP/(fig_2c_data$TP +}\StringTok{ }\NormalTok{fig_2c_data$FP)}
+\NormalTok{fig_2c_data$recall =}\StringTok{ }\NormalTok{fig_2c_data$TP/(fig_2c_data$TP +}\StringTok{ }\NormalTok{fig_2c_data$FN)}
+\NormalTok{fig_2c_data =}\StringTok{ }\NormalTok{fig_2c_data[!}\KeywordTok{is.na}\NormalTok{(fig_2c_data$precision), ]}
+
+\NormalTok{fig_2c_summary =}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(fig_2c_data, }\StringTok{"precision"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"prob"}\NormalTok{, }
+    \StringTok{"name"}\NormalTok{, }\StringTok{"Data_source"}\NormalTok{, }\StringTok{"clique"}\NormalTok{, }\StringTok{"InClique"}\NormalTok{))}
+\NormalTok{fig_2c_summary$name =}\StringTok{ }\KeywordTok{as.character}\NormalTok{(fig_2c_summary$name)}
+\NormalTok{fig2c <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(fig_2c_summary, }\KeywordTok{aes}\NormalTok{(prob)) +}\StringTok{ }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \NormalTok{precision, }
+    \DataTypeTok{colour =} \NormalTok{name)) +}\StringTok{ }\KeywordTok{geom_ribbon}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin =} \NormalTok{precision -}\StringTok{ }\NormalTok{sd, }
+    \DataTypeTok{ymax =} \NormalTok{precision +}\StringTok{ }\NormalTok{sd, }\DataTypeTok{fill =} \NormalTok{name), }\DataTypeTok{alpha =} \FloatTok{0.6}\NormalTok{) +}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(~clique +}\StringTok{ }
+\StringTok{    }\NormalTok{Data_source +}\StringTok{ }\NormalTok{InClique, }\DataTypeTok{ncol =} \DecValTok{4}\NormalTok{) +}\StringTok{ }\KeywordTok{theme_bw}\NormalTok{() +}\StringTok{ }\KeywordTok{scale_fill_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{"black"}\NormalTok{, }
+    \StringTok{"cyan4"}\NormalTok{, }\StringTok{"magenta"}\NormalTok{, }\StringTok{"yellow4"}\NormalTok{)) +}\StringTok{ }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{"black"}\NormalTok{, }
+    \StringTok{"cyan4"}\NormalTok{, }\StringTok{"magenta"}\NormalTok{, }\StringTok{"yellow4"}\NormalTok{)) +}\StringTok{ }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }
+    \FloatTok{0.9}\NormalTok{, }\FloatTok{0.4}\NormalTok{))}
+\KeywordTok{show}\NormalTok{(fig2c)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Figure 3: Simulation Data Precision /
+Recall}\label{figure-3-simulation-data-precision-recall}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\StringTok{"Simulation_edges_all_RIMBAnet.RData"}\NormalTok{)}
+\NormalTok{real_network =}\StringTok{ }\KeywordTok{read.delim}\NormalTok{(}\KeywordTok{paste}\NormalTok{(gitPath, }\StringTok{"data/Simulation_true_network.txt"}\NormalTok{, }
+    \DataTypeTok{sep =} \StringTok{""}\NormalTok{), }\DataTypeTok{header =} \NormalTok{F)}
+\KeywordTok{colnames}\NormalTok{(real_network) =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"node1"}\NormalTok{, }\StringTok{"node2"}\NormalTok{)}
+
+\NormalTok{tpr <-}\StringTok{ }\NormalTok{function(edges, real_network) \{}
+    \NormalTok{edges_test =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges$node1, edges$node2, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+    \NormalTok{edges_real =}\StringTok{ }\KeywordTok{paste}\NormalTok{(real_network$node1, real_network$node2, }
+        \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+    \KeywordTok{return}\NormalTok{(}\KeywordTok{length}\NormalTok{(}\KeywordTok{intersect}\NormalTok{(edges_test, edges_real))/}\KeywordTok{length}\NormalTok{(edges_test))}
+\NormalTok{\}}
+
+\NormalTok{fdr <-}\StringTok{ }\NormalTok{function(edges, real_network) \{}
+    \NormalTok{edges_test =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges$node1, edges$node2, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+    \NormalTok{edges_real =}\StringTok{ }\KeywordTok{paste}\NormalTok{(real_network$node1, real_network$node2, }
+        \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+    \KeywordTok{return}\NormalTok{(}\KeywordTok{length}\NormalTok{(}\KeywordTok{setdiff}\NormalTok{(edges_test, edges_real))/}\KeywordTok{length}\NormalTok{(edges_test))}
+\NormalTok{\}}
+
+\NormalTok{recall <-}\StringTok{ }\NormalTok{function(edges, real_network) \{}
+    \NormalTok{edges_test =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges$node1, edges$node2, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+    \NormalTok{edges_real =}\StringTok{ }\KeywordTok{paste}\NormalTok{(real_network$node1, real_network$node2, }
+        \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+    \KeywordTok{return}\NormalTok{(}\KeywordTok{length}\NormalTok{(}\KeywordTok{intersect}\NormalTok{(edges_test, edges_real))/}\KeywordTok{length}\NormalTok{(edges_real))}
+\NormalTok{\}}
+
+\NormalTok{tpr_res =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{()}
+\NormalTok{fdr_res =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{()}
+\NormalTok{recall_res =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{()}
+\NormalTok{for (p in }\KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.1}\NormalTok{)) \{}
+    \NormalTok{for (name in }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{100}\NormalTok{)) \{}
+        \NormalTok{for (rep in }\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{) \{}
+            \NormalTok{test_data =}\StringTok{ }\NormalTok{edges_all[edges_all$postProb ==}\StringTok{ }\NormalTok{p &}\StringTok{ }\NormalTok{edges_all$data_type ==}\StringTok{ }
+\StringTok{                }\NormalTok{name &}\StringTok{ }\NormalTok{edges_all$repRun ==}\StringTok{ }\NormalTok{rep, ]}
+            \NormalTok{fdr_res =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(fdr_res, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{name =} \NormalTok{name, }
+                \DataTypeTok{repRun =} \NormalTok{rep, }\DataTypeTok{postProb =} \NormalTok{p, }\DataTypeTok{fdr =} \KeywordTok{fdr}\NormalTok{(test_data, }
+                  \NormalTok{real_network)))}
+            \NormalTok{tpr_res =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(tpr_res, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{name =} \NormalTok{name, }
+                \DataTypeTok{repRun =} \NormalTok{rep, }\DataTypeTok{postProb =} \NormalTok{p, }\DataTypeTok{tpr =} \KeywordTok{tpr}\NormalTok{(test_data, }
+                  \NormalTok{real_network)))}
+            
+            \NormalTok{recall_res =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(recall_res, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{name =} \NormalTok{name, }
+                \DataTypeTok{repRun =} \NormalTok{rep, }\DataTypeTok{postProb =} \NormalTok{p, }\DataTypeTok{recall =} \KeywordTok{recall}\NormalTok{(test_data, }
+                  \NormalTok{real_network)))}
+        \NormalTok{\}}
+    \NormalTok{\}}
+\NormalTok{\}}
+
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\NormalTok{tpr_res$repRun =}\StringTok{ }\KeywordTok{factor}\NormalTok{(tpr_res$repRun)}
+\NormalTok{tpr_res2 =}\StringTok{ }\NormalTok{tpr_res[}\KeywordTok{is.element}\NormalTok{(tpr_res$postProb, }\KeywordTok{c}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }
+    \FloatTok{0.2}\NormalTok{))), ]}
+\NormalTok{tpr_res2$name =}\StringTok{ }\NormalTok{tpr_res2$name *}\StringTok{ }\DecValTok{10}
+
+\NormalTok{tpr_sum =}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(tpr_res[}\KeywordTok{is.element}\NormalTok{(tpr_res$postProb, }\KeywordTok{c}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }
+    \FloatTok{0.9}\NormalTok{, }\FloatTok{0.4}\NormalTok{))), ], }\StringTok{"tpr"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{, }\StringTok{"postProb"}\NormalTok{))}
+
+\NormalTok{tpr_sum$postProb2 =}\StringTok{ }\KeywordTok{as.character}\NormalTok{(tpr_sum$postProb)}
+\NormalTok{tpr_sum$name =}\StringTok{ }\NormalTok{tpr_sum$name *}\StringTok{ }\DecValTok{10}
+
+\NormalTok{fdr_sum =}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(fdr_res[}\KeywordTok{is.element}\NormalTok{(fdr_res$postProb, }\KeywordTok{c}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }
+    \FloatTok{0.9}\NormalTok{, }\FloatTok{0.4}\NormalTok{))), ], }\StringTok{"fdr"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{, }\StringTok{"postProb"}\NormalTok{))}
+\NormalTok{fdr_res$repRun =}\StringTok{ }\KeywordTok{factor}\NormalTok{(fdr_res$repRun)}
+\NormalTok{fdr_res2 =}\StringTok{ }\NormalTok{fdr_res[}\KeywordTok{is.element}\NormalTok{(fdr_res$postProb, }\KeywordTok{c}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }
+    \FloatTok{0.2}\NormalTok{))), ]}
+\NormalTok{fdr_res2$name =}\StringTok{ }\NormalTok{fdr_res2$name *}\StringTok{ }\DecValTok{10}
+
+\NormalTok{recall_sum =}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(recall_res[}\KeywordTok{is.element}\NormalTok{(recall_res$postProb, }
+    \KeywordTok{c}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.4}\NormalTok{))), ], }\StringTok{"recall"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{, }
+    \StringTok{"postProb"}\NormalTok{))}
+\NormalTok{recall_sum$postProb2 =}\StringTok{ }\KeywordTok{as.character}\NormalTok{(recall_sum$postProb)}
+\NormalTok{recall_sum$name =}\StringTok{ }\NormalTok{recall_sum$name *}\StringTok{ }\DecValTok{10}
+
+\NormalTok{## precision recall:}
+\NormalTok{tpr_res$type =}\StringTok{ "Precision"}
+\NormalTok{recall_res$type =}\StringTok{ "Recall"}
+\KeywordTok{colnames}\NormalTok{(tpr_res)[}\KeywordTok{colnames}\NormalTok{(tpr_res) ==}\StringTok{ "tpr"}\NormalTok{] =}\StringTok{ "value"}
+\KeywordTok{colnames}\NormalTok{(recall_res)[}\KeywordTok{colnames}\NormalTok{(recall_res) ==}\StringTok{ "recall"}\NormalTok{] =}\StringTok{ "value"}
+\NormalTok{total =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(tpr_res, recall_res)}
+
+\NormalTok{total_sum =}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(total, }\StringTok{"value"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{, }\StringTok{"postProb"}\NormalTok{, }
+    \StringTok{"type"}\NormalTok{))}
+\NormalTok{total_sum$postProb2 =}\StringTok{ }\KeywordTok{as.character}\NormalTok{(total_sum$postProb)}
+\NormalTok{total_sum$postProb_type =}\StringTok{ }\KeywordTok{paste}\NormalTok{(total_sum$postProb2, total_sum$type, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{total_sum$name =}\StringTok{ }\NormalTok{total_sum$name *}\StringTok{ }\DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+Figure 3:
+
+\includegraphics{PSB_RMarkdownGIT_files/figure-latex/Fig\%203\%20Plot-1.pdf}
+
+\subsubsection{Figure 4: Reproducibility of Key Driver Nodes
+(KDs)}\label{figure-4-reproducibility-of-key-driver-nodes-kds}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{stringsAsFactors =} \NormalTok{F)}
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list=}\KeywordTok{ls}\NormalTok{())}
+
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(}\StringTok{"igraph"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(plyr)}
+\NormalTok{gitPath <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/divara01/PSB2017_ReproducibilityOfBNs/"}\NormalTok{)}
+\NormalTok{## setting up the files for KD Calling --}
+\KeywordTok{load}\NormalTok{(}\KeywordTok{paste}\NormalTok{(gitPath, }\StringTok{"results/"}\NormalTok{, }\StringTok{"GTEx_edges_all_RIMBAnet_cliqueAdded.RData"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{))}
+
+\NormalTok{edges_all$type_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all$data_type,edges_all$repRun,}\DataTypeTok{sep=}\StringTok{"_"}\NormalTok{)}
+
+\NormalTok{for(p in }\KeywordTok{unique}\NormalTok{(edges_all$postProb))\{}
+  \NormalTok{for(d in }\KeywordTok{unique}\NormalTok{(edges_all$type_name))\{}
+    \KeywordTok{write.table}\NormalTok{(edges_all[edges_all$postProb ==}\StringTok{ }\NormalTok{p &}\StringTok{ }\NormalTok{edges_all$type_name ==}\StringTok{ }\NormalTok{d, }
+                          \KeywordTok{c}\NormalTok{(}\StringTok{'node1'}\NormalTok{, }\StringTok{'node2'}\NormalTok{)], }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\DataTypeTok{quote =} \NormalTok{F, }\DataTypeTok{row.names =} \NormalTok{F, }
+                \DataTypeTok{col.names =} \NormalTok{F, }\DataTypeTok{file =} \KeywordTok{paste}\NormalTok{(}\StringTok{"BN"}\NormalTok{, d, p, }\StringTok{"edges_GTEx.txt"}\NormalTok{, }\DataTypeTok{sep=}\StringTok{"_"}\NormalTok{))}
+  \NormalTok{\}}
+\NormalTok{\}}
+
+\NormalTok{## setting up the files for KD Calling --}
+\KeywordTok{load}\NormalTok{(}\KeywordTok{paste}\NormalTok{(gitPath, }\StringTok{"results/"}\NormalTok{, }\StringTok{"STARNET_edges_all_RIMBAnet_cliqueAdded.RData"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{))}
+
+\NormalTok{edges_all$type_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all$data_type,edges_all$repRun,}\DataTypeTok{sep=}\StringTok{"_"}\NormalTok{)}
+
+\NormalTok{for(p in }\KeywordTok{unique}\NormalTok{(edges_all$postProb))\{}
+  \NormalTok{for(d in }\KeywordTok{unique}\NormalTok{(edges_all$type_name))\{}
+    \KeywordTok{write.table}\NormalTok{(edges_all[edges_all$postProb ==}\StringTok{ }\NormalTok{p &}\StringTok{ }\NormalTok{edges_all$type_name ==}\StringTok{ }\NormalTok{d, }
+                          \KeywordTok{c}\NormalTok{(}\StringTok{'node1'}\NormalTok{, }\StringTok{'node2'}\NormalTok{)],}\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\DataTypeTok{quote =} \NormalTok{F, }\DataTypeTok{row.names =} \NormalTok{F, }
+                \DataTypeTok{col.names =} \NormalTok{F, }\DataTypeTok{file =} \KeywordTok{paste}\NormalTok{(}\StringTok{"BN"}\NormalTok{, d, p, }\StringTok{"edges_STARNET.txt"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{))}
+  \NormalTok{\}}
+\NormalTok{\}}
+
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{stringsAsFactors=}\NormalTok{F)}
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list=}\KeywordTok{ls}\NormalTok{())}
+\NormalTok{args <-}\StringTok{ }\KeywordTok{commandArgs}\NormalTok{(}\DataTypeTok{trailingOnly=}\OtherTok{TRUE}\NormalTok{) }\CommentTok{# disease = list of diseases split by ",", outputName}
+
+\NormalTok{datasets <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"GTEx"}\NormalTok{, }\StringTok{"STARNET"}\NormalTok{)}
+
+\NormalTok{for(datasetIndex in datasets)}
+  \CommentTok{#Load network edge file}
+  \KeywordTok{load}\NormalTok{(}\KeywordTok{paste}\NormalTok{(gitPath, }\StringTok{"results/"}\NormalTok{, datasetIndex, }\StringTok{"edges_all_RIMBAnet_cliqueAdded.RData"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{))}
+  \NormalTok{Edge_File <-}\StringTok{ }\NormalTok{edges_all[, }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)]}
+  \KeywordTok{colnames}\NormalTok{(Edge_File) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"From"}\NormalTok{, }\StringTok{"To"}\NormalTok{)}
+  
+  \CommentTok{#Create network in R}
+  \CommentTok{#Determine connectivity between all genes in BN}
+  
+  \NormalTok{InverseLengthAllShortestPaths <-}\StringTok{ }\KeywordTok{vector}\NormalTok{(}\StringTok{"list"}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+  
+  \NormalTok{edgeDF_i <-}\StringTok{ }\NormalTok{Edge_File}
+  
+  \NormalTok{g_i <-}\StringTok{ }\KeywordTok{graph.data.frame}\NormalTok{(}\DataTypeTok{d =} \NormalTok{edgeDF_i, }\DataTypeTok{directed =} \OtherTok{TRUE}\NormalTok{)}
+  
+  \NormalTok{summedInverseLengthAllShortestPaths <-}\StringTok{ }\KeywordTok{vector}\NormalTok{(}\StringTok{"list"}\NormalTok{, }\KeywordTok{length}\NormalTok{(}\KeywordTok{V}\NormalTok{(g_i)))}
+  
+  \NormalTok{for(node_i in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(}\KeywordTok{V}\NormalTok{(g_i)))\{}
+    \NormalTok{SP_i <-}\StringTok{ }\KeywordTok{get.all.shortest.paths}\NormalTok{(g_i, node_i, }\DataTypeTok{to =} \KeywordTok{V}\NormalTok{(g_i), }\DataTypeTok{mode =} \StringTok{"out"}\NormalTok{)}
+    \NormalTok{if(}\KeywordTok{length}\NormalTok{(SP_i$res) >}\StringTok{ }\DecValTok{0}\NormalTok{)\{}
+      \CommentTok{#This tells you how many nodes between the starting node to the target node}
+      \NormalTok{shortestPathLength_i <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(SP_i$res, length) }
+      \CommentTok{#Identifies the final target gene in the path}
+      \NormalTok{target_i <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(SP_i$res, function(x) }\KeywordTok{tail}\NormalTok{(x,}\DecValTok{1}\NormalTok{)) }
+      \CommentTok{#number of shortest paths to the target}
+      \NormalTok{spPerTarget <-}\StringTok{ }\KeywordTok{split}\NormalTok{(}\DataTypeTok{x =} \NormalTok{shortestPathLength_i, }\DataTypeTok{f =} \NormalTok{target_i) }
+      \CommentTok{#Calculates the score for each target gene from the source gene (1/#shortest paths)}
+      \NormalTok{scorePerTarget <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(spPerTarget, function(x) (}\DecValTok{1}\NormalTok{/}\KeywordTok{unique}\NormalTok{(x)) *}\StringTok{ }\KeywordTok{length}\NormalTok{(x))       }
+      \CommentTok{#Assigns a score of 0 to all genes in the subgraph}
+      \NormalTok{op_i <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\KeywordTok{length}\NormalTok{(}\KeywordTok{V}\NormalTok{(g_i))) }
+      \CommentTok{#This adds the score to the genes that were included in the shortest paths.}
+      \CommentTok{#Remaining genes are still 0}
+      \NormalTok{op_i[}\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{names}\NormalTok{(scorePerTarget))] <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(scorePerTarget) }
+      \NormalTok{summedInverseLengthAllShortestPaths[[node_i]] <-}\StringTok{ }\NormalTok{op_i}
+    \NormalTok{\}}
+  \NormalTok{\}}
+  \CommentTok{#This converts the list of scores into a dataframe}
+  \NormalTok{summedInverseLengthAllShortestPaths <-}\StringTok{ }\KeywordTok{ldply}\NormalTok{(summedInverseLengthAllShortestPaths, rbind)   }
+  \CommentTok{#gene IDs are provided as row names}
+  \KeywordTok{rownames}\NormalTok{(summedInverseLengthAllShortestPaths) <-}\StringTok{ }\KeywordTok{V}\NormalTok{(g_i)$name }
+  \CommentTok{#gene IDs are provided as column names}
+  \KeywordTok{colnames}\NormalTok{(summedInverseLengthAllShortestPaths) <-}\StringTok{ }\KeywordTok{V}\NormalTok{(g_i)$name }
+  
+  \NormalTok{totalScorePerGene <-}\StringTok{ }\KeywordTok{rowSums}\NormalTok{(summedInverseLengthAllShortestPaths)}
+  
+  \NormalTok{quantileThr <-}\StringTok{ }\KeywordTok{quantile}\NormalTok{(}\KeywordTok{rowSums}\NormalTok{(summedInverseLengthAllShortestPaths), }\FloatTok{0.95}\NormalTok{)}
+  
+  \NormalTok{KeyDrivers <-}\StringTok{ }\NormalTok{totalScorePerGene[}\KeywordTok{which}\NormalTok{(totalScorePerGene >=}\StringTok{ }\NormalTok{quantileThr)]}
+  
+  \NormalTok{KD_flag <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(}\KeywordTok{names}\NormalTok{(totalScorePerGene) %in%}\StringTok{ }\KeywordTok{names}\NormalTok{(KeyDrivers))}
+  
+  \NormalTok{perc.rank <-}\StringTok{ }\NormalTok{function(x, xo)  }\KeywordTok{length}\NormalTok{(x[x <=}\StringTok{ }\NormalTok{xo])/}\KeywordTok{length}\NormalTok{(x)*}\DecValTok{100} 
+  
+  \NormalTok{KDpercentile <-}\StringTok{ }\KeywordTok{sapply}\NormalTok{(totalScorePerGene, function(x) }\KeywordTok{perc.rank}\NormalTok{(totalScorePerGene, x))}
+  
+  \NormalTok{top_KDs =}\StringTok{ }\NormalTok{KDpercentile[KDpercentile >=}\StringTok{ }\DecValTok{95}\NormalTok{]}
+  \NormalTok{top_KDs =}\StringTok{ }\KeywordTok{sort}\NormalTok{(top_KDs,}\DataTypeTok{decreasing=}\NormalTok{T)}
+  \NormalTok{outputFN =}\StringTok{ }\KeywordTok{paste}\NormalTok{(datasetIndex,}\StringTok{"_KDs.txt"}\NormalTok{,}\DataTypeTok{sep=}\StringTok{""}\NormalTok{)}
+  \KeywordTok{write.table}\NormalTok{(top_KDs,}\DataTypeTok{file =} \NormalTok{outputFN, }\DataTypeTok{sep=}\StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{,}\DataTypeTok{quote=}\NormalTok{F, }\DataTypeTok{row.names=}\NormalTok{T, }\DataTypeTok{col.names=}\NormalTok{F)}
+\ErrorTok{\}}
+
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{stringsAsFactors=}\NormalTok{F)}
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list=}\KeywordTok{ls}\NormalTok{())}
+\NormalTok{files =}\StringTok{ }\KeywordTok{list.files}\NormalTok{(}\StringTok{"."}\NormalTok{,}\StringTok{"_STARNET_KDs.txt"}\NormalTok{)}
+\NormalTok{all_kda =}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+
+\NormalTok{for(file in files)\{}
+  \NormalTok{x =}\StringTok{ }\KeywordTok{read.delim}\NormalTok{(file,}\DataTypeTok{header=}\NormalTok{F)}
+  \NormalTok{data_type =}\StringTok{ }\KeywordTok{strsplit}\NormalTok{(file,}\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{2}\NormalTok{]}
+  \NormalTok{repRun =}\StringTok{ }\KeywordTok{strsplit}\NormalTok{(file,}\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{3}\NormalTok{]}
+  \NormalTok{postProb =}\StringTok{ }\KeywordTok{strsplit}\NormalTok{(file,}\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{4}\NormalTok{]}
+  \NormalTok{all_kda =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(all_kda, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{gene =} \NormalTok{x[,}\DecValTok{1}\NormalTok{], }\DataTypeTok{data_type =} \NormalTok{data_type, }\DataTypeTok{repRun =} \NormalTok{repRun, }
+                                      \DataTypeTok{postProb =} \NormalTok{postProb))}
+\NormalTok{\}}
+
+\KeywordTok{load}\NormalTok{(}\KeywordTok{paste}\NormalTok{(gitPath, }\StringTok{"results/"}\NormalTok{, }\StringTok{"STARNET_edges_all_RIMBAnet_cliqueAdded.RData"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{))}
+\KeywordTok{head}\NormalTok{(edges_all)}
+
+\NormalTok{edges_all$KDflagNode1_redo =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(edges_all),function(x)\{}
+  \KeywordTok{is.element}\NormalTok{(edges_all$node1[x],all_kda$gene[all_kda$repRun ==}\StringTok{ }\NormalTok{edges_all$repRun[x] &}\StringTok{ }
+\StringTok{                                               }\NormalTok{all_kda$data_type ==}\StringTok{ }\NormalTok{edges_all$data_type[x] &}\StringTok{ }
+\StringTok{                                               }\NormalTok{all_kda$postProb ==}\StringTok{ }\NormalTok{edges_all$postProb[x]])}
+\NormalTok{\})}
+
+\KeywordTok{table}\NormalTok{(edges_all$KDflagNode1,edges_all$KDflagNode1_redo)}
+
+\KeywordTok{save}\NormalTok{(edges_all, }\DataTypeTok{file =} \StringTok{"STARNET_edges_all_RIMBAnet_cliqueAdded_KDAdded.RData"}\NormalTok{)}
+
+\NormalTok{## reading in the KD Results --}
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{stringsAsFactors=}\NormalTok{F)}
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list=}\KeywordTok{ls}\NormalTok{())}
+\NormalTok{files =}\StringTok{ }\KeywordTok{list.files}\NormalTok{(}\StringTok{"."}\NormalTok{,}\StringTok{"_GTEx_KDs.txt"}\NormalTok{)}
+\NormalTok{all_kda =}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\NormalTok{for(file in files)\{}
+  \NormalTok{x =}\StringTok{ }\KeywordTok{read.delim}\NormalTok{(file,}\DataTypeTok{header=}\NormalTok{F)}
+  \NormalTok{data_type =}\StringTok{ }\KeywordTok{strsplit}\NormalTok{(file,}\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{2}\NormalTok{]}
+  \NormalTok{repRun =}\StringTok{ }\KeywordTok{strsplit}\NormalTok{(file,}\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{3}\NormalTok{]}
+  \NormalTok{postProb =}\StringTok{ }\KeywordTok{strsplit}\NormalTok{(file,}\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{4}\NormalTok{]}
+  \NormalTok{all_kda =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(all_kda, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{gene =} \NormalTok{x[,}\DecValTok{1}\NormalTok{] , }\DataTypeTok{data_type =} \NormalTok{data_type,}\DataTypeTok{repRun =} \NormalTok{repRun, }
+                                      \DataTypeTok{postProb =} \NormalTok{postProb))}
+\NormalTok{\}}
+
+\KeywordTok{load}\NormalTok{( }\StringTok{"GTEx_edges_all_RIMBAnet_cliqueAdded.RData"}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(edges_all)}
+
+\NormalTok{edges_all$KDflagNode1_redo =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(edges_all),function(x)\{}
+  \KeywordTok{is.element}\NormalTok{(edges_all$node1[x], all_kda$gene[all_kda$repRun ==}\StringTok{ }\NormalTok{edges_all$repRun[x] &}\StringTok{ }
+\StringTok{                                                }\NormalTok{all_kda$data_type ==}\StringTok{ }\NormalTok{edges_all$data_type[x] &}\StringTok{ }
+\StringTok{                                                }\NormalTok{all_kda$postProb ==}\StringTok{ }\NormalTok{edges_all$postProb[x]])}
+\NormalTok{\})}
+
+\KeywordTok{table}\NormalTok{(edges_all$KDflagNode1,edges_all$KDflagNode1_redo)}
+
+\KeywordTok{save}\NormalTok{(edges_all, }\DataTypeTok{file =} \StringTok{"GTEx_edges_all_RIMBAnet_cliqueAdded_KDAdded.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Generate Node score for all nodes:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Calculate Most Connected Node Conservation}
+\NormalTok{datasets <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"GTEx"}\NormalTok{, }\StringTok{"STARNET"}\NormalTok{)}
+
+\NormalTok{for(datasetIndex in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(datasets))\{}
+  \KeywordTok{message}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"running..."}\NormalTok{))}
+  \CommentTok{#loads in the edges_all file}
+  \KeywordTok{load}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"_edges_all_RIMBAnet_cliqueAdded_KDAdded.RData"}\NormalTok{, }\DataTypeTok{sep =}\StringTok{""}\NormalTok{)) }
+
+  \NormalTok{allNodes <-}\StringTok{ }\KeywordTok{unique}\NormalTok{(}\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(edges_all[, }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{2}\NormalTok{)])))}
+  \NormalTok{totalRows <-}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$postProb)) *}\StringTok{ }
+\StringTok{    }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$data_type)) *}\StringTok{ }
+\StringTok{    }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$repRun)) *}\StringTok{ }
+\StringTok{    }\KeywordTok{length}\NormalTok{(allNodes)}
+  
+  \NormalTok{postProb <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\KeywordTok{sort}\NormalTok{(}\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$postProb))), }
+                  \NormalTok{totalRows/}\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$postProb)))}
+  
+  \NormalTok{subsets <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{sapply}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$data_type), function(x) }
+    \KeywordTok{rep}\NormalTok{(x, }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$postProb)) *}\StringTok{ }
+\StringTok{          }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$repRun))))), }\KeywordTok{length}\NormalTok{(allNodes))}
+  
+  \NormalTok{nodes <-}\StringTok{ }\KeywordTok{as.vector}\NormalTok{((}\KeywordTok{sapply}\NormalTok{(allNodes, function(x) }
+    \KeywordTok{rep}\NormalTok{(x, }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$data_type)) *}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$repRun)) *}
+\StringTok{          }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$postProb))))))}
+  
+  \NormalTok{repRun <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{sapply}\NormalTok{(}\KeywordTok{as.vector}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$repRun)), function(x) }
+    \KeywordTok{rep}\NormalTok{(x, }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$postProb))))), }\KeywordTok{length}\NormalTok{(allNodes) *}\StringTok{ }
+\StringTok{      }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all$data_type)))}
+  
+  \NormalTok{nodeTable <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{cbind}\NormalTok{(nodes, postProb, subsets, repRun))}
+  
+  \KeywordTok{message}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"evaluating each node's connections..."}\NormalTok{))}
+  \NormalTok{for(i in }\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(nodeTable))\{}
+    \NormalTok{node_i <-}\StringTok{ }\NormalTok{nodeTable$nodes[i]}
+    \NormalTok{postProb_i <-}\StringTok{ }\NormalTok{nodeTable$postProb[i]}
+    \NormalTok{subset_i <-}\StringTok{ }\NormalTok{nodeTable$subsets[i]}
+    \NormalTok{repRun_i <-}\StringTok{ }\NormalTok{nodeTable$repRun[i]}
+    
+    \NormalTok{nodeTable$outDegree[i] <-}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{which}\NormalTok{(edges_all$node1 ==}\StringTok{ }\NormalTok{node_i &}\StringTok{ }
+\StringTok{                                             }\NormalTok{edges_all$postProb ==}\StringTok{ }\NormalTok{postProb_i &}\StringTok{ }
+\StringTok{                                             }\NormalTok{edges_all$data_type ==}\StringTok{ }\NormalTok{subset_i &}\StringTok{ }
+\StringTok{                                             }\NormalTok{edges_all$repRun ==}\StringTok{ }\NormalTok{repRun_i))}
+    \NormalTok{nodeTable$inDegree[i] <-}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{which}\NormalTok{(edges_all$node2 ==}\StringTok{ }\NormalTok{node_i &}\StringTok{ }
+\StringTok{                                            }\NormalTok{edges_all$postProb ==}\StringTok{ }\NormalTok{postProb_i &}\StringTok{ }
+\StringTok{                                            }\NormalTok{edges_all$data_type ==}\StringTok{ }\NormalTok{subset_i &}\StringTok{ }
+\StringTok{                                            }\NormalTok{edges_all$repRun ==}\StringTok{ }\NormalTok{repRun_i))}
+    \NormalTok{nodeTable$allDegree[i] <-}\StringTok{ }\NormalTok{nodeTable$outDegree[i] +}\StringTok{ }\NormalTok{nodeTable$inDegree[i]}
+    \NormalTok{if(i %%}\StringTok{ }\DecValTok{500} \NormalTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)\{}\KeywordTok{message}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(nodeTable) -}\StringTok{ }\NormalTok{i, }\StringTok{" remaining..."}\NormalTok{))\}}
+  \NormalTok{\}}
+  
+  \KeywordTok{assign}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"allNodeScores"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), nodeTable)}
+  \KeywordTok{write.table}\NormalTok{(nodeTable, }\DataTypeTok{file =} \KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"_allNodeScores"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{), }
+              \DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\DataTypeTok{row.names =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{col.names =} \OtherTok{TRUE}\NormalTok{)}
+  \KeywordTok{message}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"complete!"}\NormalTok{))}
+\NormalTok{\}}
+
+\CommentTok{#Append values to the edges_all table}
+\NormalTok{for(datasetIndex in }\DecValTok{1}\NormalTok{:}\KeywordTok{length}\NormalTok{(datasets))\{}
+  \KeywordTok{message}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"running..."}\NormalTok{))}
+  \CommentTok{#loads in the edges_all file}
+  \KeywordTok{load}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"_edges_all_RIMBAnet_cliqueAdded_KDAdded.RData"}\NormalTok{, }\DataTypeTok{sep =}\StringTok{""}\NormalTok{)) }
+  \NormalTok{nodeTable <-}\StringTok{ }\KeywordTok{read.delim}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"_allNodeScores"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{), }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }
+                          \DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+  
+  \NormalTok{edges_all$outDegree <-}\StringTok{ }\OtherTok{NA}
+  \NormalTok{edges_all$inDegree <-}\StringTok{ }\OtherTok{NA}
+  \NormalTok{edges_all$allDegree <-}\StringTok{ }\OtherTok{NA}
+  
+  \NormalTok{for(i in }\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(edges_all))\{}
+    \NormalTok{node1_i <-}\StringTok{ }\NormalTok{edges_all$node1[i]}
+    \NormalTok{postProb_i <-}\StringTok{ }\NormalTok{edges_all$postProb[i]}
+    \NormalTok{repRun_i <-}\StringTok{ }\NormalTok{edges_all$repRun[i]}
+    \NormalTok{data_type_i <-}\StringTok{ }\NormalTok{edges_all$data_type[i]}
+    
+    \NormalTok{nodeTablePos <-}\StringTok{ }\KeywordTok{which}\NormalTok{(nodeTable$nodes ==}\StringTok{ }\NormalTok{node1_i &}\StringTok{ }
+\StringTok{                            }\NormalTok{nodeTable$postProb ==}\StringTok{ }\NormalTok{postProb_i &}\StringTok{ }
+\StringTok{                            }\NormalTok{nodeTable$subsets ==}\StringTok{ }\NormalTok{data_type_i &}\StringTok{ }
+\StringTok{                            }\NormalTok{nodeTable$repRun ==}\StringTok{ }\NormalTok{repRun_i)}
+    
+    \NormalTok{edges_all$outDegree[i] <-}\StringTok{ }\NormalTok{nodeTable$outDegree[nodeTablePos]}
+    \NormalTok{edges_all$inDegree[i] <-}\StringTok{ }\NormalTok{nodeTable$inDegree[nodeTablePos]}
+    \NormalTok{edges_all$allDegree[i] <-}\StringTok{ }\NormalTok{nodeTable$allDegree[nodeTablePos]}
+    
+    \NormalTok{if(i %%}\StringTok{ }\DecValTok{500} \NormalTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)\{}\KeywordTok{message}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\KeywordTok{nrow}\NormalTok{(edges_all) -}\StringTok{ }\NormalTok{i, }\StringTok{" remaining..."}\NormalTok{))\}}
+  \NormalTok{\}}
+  
+  \NormalTok{edgesAll_filename <-}\StringTok{ }\KeywordTok{paste}\NormalTok{(dataset[datasetIndex], }
+                             
+                             \StringTok{"_edges_all_RIMBAnet_cliqueAdded_KDAdded_HubNodes.RData"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{""}\NormalTok{)}
+  
+  \KeywordTok{save}\NormalTok{(edges_all,}\DataTypeTok{file=}\NormalTok{edgesAll_filename)}
+  \KeywordTok{message}\NormalTok{(}\KeywordTok{paste}\NormalTok{(datasets[datasetIndex], }\StringTok{"Complete!"}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Figure 5: Hub Nodes Reproducibility
+Rate}\label{figure-5-hub-nodes-reproducibility-rate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{stringsAsFactors =} \NormalTok{F)}
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list =} \KeywordTok{ls}\NormalTok{())}
+\KeywordTok{require}\NormalTok{(ggplot2)}
+\KeywordTok{require}\NormalTok{(plyr)}
+\KeywordTok{require}\NormalTok{(gridExtra)}
+\KeywordTok{require}\NormalTok{(grid)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{gtex =}\StringTok{ }\KeywordTok{read.delim}\NormalTok{(}\StringTok{"GTEx_allNodeScores"}\NormalTok{)}
+\NormalTok{starnet =}\StringTok{ }\KeywordTok{read.delim}\NormalTok{(}\StringTok{"STARNET_allNodeScores"}\NormalTok{)}
+\NormalTok{gtex =}\StringTok{ }\NormalTok{gtex[gtex$allDegree !=}\StringTok{ }\DecValTok{0}\NormalTok{, ]}
+\NormalTok{starnet =}\StringTok{ }\NormalTok{starnet[starnet$allDegree !=}\StringTok{ }\DecValTok{0}\NormalTok{, ]}
+
+\NormalTok{starnet_fn =}\StringTok{ "STARNET_edges_all_RIMBAnet_cliqueAdded_KDAdded_HubNodes.RData"}
+\NormalTok{gtex_fn =}\StringTok{ "GTEx_edges_all_RIMBAnet_cliqueAdded_KDAdded_HubNodes.RData"}
+
+\KeywordTok{load}\NormalTok{(starnet_fn)}
+\NormalTok{edges_all_starnet =}\StringTok{ }\NormalTok{edges_all}
+\KeywordTok{rm}\NormalTok{(edges_all)}
+
+\KeywordTok{load}\NormalTok{(gtex_fn)}
+\NormalTok{edges_all_gtex =}\StringTok{ }\NormalTok{edges_all}
+\KeywordTok{rm}\NormalTok{(edges_all)}
+
+\NormalTok{edges_all_starnet$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_starnet$data_type, edges_all_starnet$repRun, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_gtex$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_gtex$data_type, edges_all_gtex$repRun, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+
+\NormalTok{edges_all_starnet =}\StringTok{ }\NormalTok{edges_all_starnet[edges_all_starnet$postProb !=}\StringTok{ }
+\StringTok{    }\DecValTok{1}\NormalTok{, ]}
+\NormalTok{edges_all_gtex =}\StringTok{ }\NormalTok{edges_all_gtex[edges_all_gtex$postProb !=}\StringTok{ }\DecValTok{1}\NormalTok{, }
+    \NormalTok{]}
+
+\NormalTok{gtex =}\StringTok{ }\NormalTok{gtex[gtex$postProb !=}\StringTok{ }\DecValTok{1}\NormalTok{, ]}
+\NormalTok{starnet =}\StringTok{ }\NormalTok{starnet[starnet$postProb !=}\StringTok{ }\DecValTok{1}\NormalTok{, ]}
+
+\NormalTok{## calculate the top connected out degree nodes:}
+\NormalTok{gtex_top =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{()}
+\NormalTok{starnet_top =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{()}
+\NormalTok{for (p in }\KeywordTok{unique}\NormalTok{(gtex$postProb)) \{}
+    \NormalTok{for (name in }\KeywordTok{c}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{100}\NormalTok{)) \{}
+        \NormalTok{for (rep in }\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{) \{}
+            \NormalTok{if (name ==}\StringTok{ }\DecValTok{100}\NormalTok{) \{}
+                \CommentTok{# for the complete networks, taking the same cutoff as the}
+                \CommentTok{# 100_1 in all replicates because edge number is so similar}
+                \CommentTok{# to avoid the issue of slight biase by different cutoffs.}
+                \NormalTok{gtex_top =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(gtex_top, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{postProb =} \NormalTok{p, }
+                  \DataTypeTok{data_type =} \NormalTok{name, }\DataTypeTok{repRun =} \NormalTok{rep, }\DataTypeTok{outCutoff =} \KeywordTok{quantile}\NormalTok{(gtex$outDegree[gtex$repRun ==}\StringTok{ }
+\StringTok{                    }\DecValTok{1} \NormalTok{&}\StringTok{ }\NormalTok{gtex$postProb ==}\StringTok{ }\NormalTok{p &}\StringTok{ }\NormalTok{gtex$subsets ==}\StringTok{ }
+\StringTok{                    }\NormalTok{name], }\FloatTok{0.9}\NormalTok{)[[}\DecValTok{1}\NormalTok{]]))}
+                \NormalTok{starnet_top =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(starnet_top, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{postProb =} \NormalTok{p, }
+                  \DataTypeTok{data_type =} \NormalTok{name, }\DataTypeTok{repRun =} \NormalTok{rep, }\DataTypeTok{outCutoff =} \KeywordTok{quantile}\NormalTok{(starnet$outDegree[starnet$repRun ==}\StringTok{ }
+\StringTok{                    }\DecValTok{1} \NormalTok{&}\StringTok{ }\NormalTok{starnet$postProb ==}\StringTok{ }\NormalTok{p &}\StringTok{ }\NormalTok{starnet$subsets ==}\StringTok{ }
+\StringTok{                    }\NormalTok{name], }\FloatTok{0.9}\NormalTok{)[[}\DecValTok{1}\NormalTok{]]))}
+            \NormalTok{\} else \{}
+                \NormalTok{gtex_top =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(gtex_top, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{postProb =} \NormalTok{p, }
+                  \DataTypeTok{data_type =} \NormalTok{name, }\DataTypeTok{repRun =} \NormalTok{rep, }\DataTypeTok{outCutoff =} \KeywordTok{quantile}\NormalTok{(gtex$outDegree[gtex$repRun ==}\StringTok{ }
+\StringTok{                    }\NormalTok{rep &}\StringTok{ }\NormalTok{gtex$postProb ==}\StringTok{ }\NormalTok{p &}\StringTok{ }\NormalTok{gtex$subsets ==}\StringTok{ }
+\StringTok{                    }\NormalTok{name], }\FloatTok{0.9}\NormalTok{)[[}\DecValTok{1}\NormalTok{]]))}
+                \NormalTok{starnet_top =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(starnet_top, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{postProb =} \NormalTok{p, }
+                  \DataTypeTok{data_type =} \NormalTok{name, }\DataTypeTok{repRun =} \NormalTok{rep, }\DataTypeTok{outCutoff =} \KeywordTok{quantile}\NormalTok{(starnet$outDegree[starnet$repRun ==}\StringTok{ }
+\StringTok{                    }\NormalTok{rep &}\StringTok{ }\NormalTok{starnet$postProb ==}\StringTok{ }\NormalTok{p &}\StringTok{ }\NormalTok{starnet$subsets ==}\StringTok{ }
+\StringTok{                    }\NormalTok{name], }\FloatTok{0.9}\NormalTok{)[[}\DecValTok{1}\NormalTok{]]))}
+            \NormalTok{\}}
+        \NormalTok{\}}
+    \NormalTok{\}}
+\NormalTok{\}}
+
+\NormalTok{gtex$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(gtex$subsets, gtex$repRun, gtex$postProb, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{starnet$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(starnet$subsets, starnet$repRun, starnet$postProb, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{starnet_top$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(starnet_top$data_type, starnet_top$repRun, }
+    \NormalTok{starnet_top$postProb, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{gtex_top$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(gtex_top$data_type, gtex_top$repRun, gtex_top$postProb, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+
+\NormalTok{## for each node1 assign if it is in the top connected node:}
+\NormalTok{edges_all_starnet$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_starnet$data_type, edges_all_starnet$repRun, }
+    \NormalTok{edges_all_starnet$postProb, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_gtex$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_gtex$data_type, edges_all_gtex$repRun, }
+    \NormalTok{edges_all_starnet$postProb, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+
+\NormalTok{starnet_top1 =}\StringTok{ }\NormalTok{starnet_top$outCutoff}
+\KeywordTok{names}\NormalTok{(starnet_top1) =}\StringTok{ }\NormalTok{starnet_top$name}
+\NormalTok{edges_all_starnet$TopConnNode1 =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(edges_all_starnet), }
+    \NormalTok{function(x) \{}
+        \KeywordTok{is.element}\NormalTok{(edges_all_starnet$node1[x], starnet$nodes[starnet$name ==}\StringTok{ }
+\StringTok{            }\NormalTok{edges_all_starnet$name[x] &}\StringTok{ }\NormalTok{starnet$outDegree >=}\StringTok{ }
+\StringTok{            }\NormalTok{starnet_top1[edges_all_starnet$name[x]]])}
+    \NormalTok{\})}
+
+\NormalTok{gtex_top1 =}\StringTok{ }\NormalTok{gtex_top$outCutoff}
+\KeywordTok{names}\NormalTok{(gtex_top1) =}\StringTok{ }\NormalTok{gtex_top$name}
+\NormalTok{edges_all_gtex$TopConnNode1 =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(}\DecValTok{1}\NormalTok{:}\KeywordTok{nrow}\NormalTok{(edges_all_gtex), }
+    \NormalTok{function(x) \{}
+        \KeywordTok{is.element}\NormalTok{(edges_all_gtex$node1[x], gtex$nodes[gtex$name ==}\StringTok{ }
+\StringTok{            }\NormalTok{edges_all_gtex$name[x] &}\StringTok{ }\NormalTok{gtex$outDegree >=}\StringTok{ }\NormalTok{gtex_top1[edges_all_gtex$name[x]]])}
+    \NormalTok{\})}
+
+\NormalTok{kda =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(}\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all_gtex[, }\KeywordTok{c}\NormalTok{(}\StringTok{"node1"}\NormalTok{, }\StringTok{"postProb"}\NormalTok{, }
+    \StringTok{"repRun"}\NormalTok{, }\StringTok{"data_type"}\NormalTok{, }\StringTok{"TopConnNode1"}\NormalTok{)]), }\DataTypeTok{Data_source =} \StringTok{"GTEx"}\NormalTok{), }
+    \KeywordTok{data.frame}\NormalTok{(}\KeywordTok{unique}\NormalTok{(edges_all_starnet[, }\KeywordTok{c}\NormalTok{(}\StringTok{"node1"}\NormalTok{, }\StringTok{"postProb"}\NormalTok{, }
+        \StringTok{"repRun"}\NormalTok{, }\StringTok{"data_type"}\NormalTok{, }\StringTok{"TopConnNode1"}\NormalTok{)]), }\DataTypeTok{Data_source =} \StringTok{"STARNET"}\NormalTok{))}
+\NormalTok{kda$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(kda$Data_source, kda$data_type, kda$repRun, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{kda$postProb =}\StringTok{ }\NormalTok{kda$postProb}
+
+\NormalTok{kda =}\StringTok{ }\NormalTok{kda[kda$TopConnNode1 &}\StringTok{ }\NormalTok{kda$postProb !=}\StringTok{ }\DecValTok{1}\NormalTok{, ]}
+\NormalTok{getFractionOverlap =}\StringTok{ }\NormalTok{function(kda, A_name, B_name, prob, }\DataTypeTok{fixed =} \OtherTok{TRUE}\NormalTok{) \{}
+    \NormalTok{if (A_name ==}\StringTok{ }\NormalTok{B_name) \{}
+        \NormalTok{A_size =}\StringTok{ }\KeywordTok{strsplit}\NormalTok{(A_name, }\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{2}\NormalTok{]}
+        \NormalTok{B_name =}\StringTok{ }\KeywordTok{setdiff}\NormalTok{(}\KeywordTok{unique}\NormalTok{(kda$name[kda$data_type !=}\StringTok{ }\NormalTok{A_size]), }
+            \NormalTok{A_name)}
+    \NormalTok{\}}
+    \NormalTok{if (fixed) \{}
+        \NormalTok{AandB =}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{intersect}\NormalTok{(kda$node1[kda$name ==}\StringTok{ }\NormalTok{A_name &}\StringTok{ }
+\StringTok{            }\NormalTok{kda$postProb ==}\StringTok{ }\NormalTok{prob], kda$node1[}\KeywordTok{is.element}\NormalTok{(kda$name, }
+            \NormalTok{B_name) &}\StringTok{ }\NormalTok{kda$postProb ==}\StringTok{ }\NormalTok{prob]))}
+    \NormalTok{\} else \{}
+        \NormalTok{AandB =}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{intersect}\NormalTok{(kda$node1[kda$name ==}\StringTok{ }\NormalTok{A_name &}\StringTok{ }
+\StringTok{            }\NormalTok{kda$postProb ==}\StringTok{ }\NormalTok{prob], kda$node1[}\KeywordTok{is.element}\NormalTok{(kda$name, }
+            \NormalTok{B_name)]))}
+    \NormalTok{\}}
+    \NormalTok{a =}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(kda$node1[kda$name ==}\StringTok{ }\NormalTok{A_name &}\StringTok{ }\NormalTok{kda$postProb ==}\StringTok{ }
+\StringTok{        }\NormalTok{prob]))}
+    
+    \KeywordTok{return}\NormalTok{(AandB/a)}
+\NormalTok{\}}
+
+\NormalTok{kda_fractions =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{()}
+\NormalTok{subsamp =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{100}\NormalTok{)}
+\NormalTok{for (p in }\KeywordTok{unique}\NormalTok{(kda$postProb)) \{}
+    \NormalTok{for (sub in }\KeywordTok{unique}\NormalTok{(kda$data_type)) \{}
+        \NormalTok{for (k in }\KeywordTok{unique}\NormalTok{(kda$repRun)) \{}
+            \NormalTok{for (fixed in }\KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{)) \{}
+                \NormalTok{for (dataSet in }\KeywordTok{unique}\NormalTok{(kda$Data_source)) \{}
+                  \CommentTok{# cat('on ',dataSet,sub, k, fixed,p,'\textbackslash{}n')}
+                  \NormalTok{if (sub ==}\StringTok{ }\DecValTok{100} \NormalTok{&}\StringTok{ }\NormalTok{k ==}\StringTok{ "1"}\NormalTok{) \{}
+                    \NormalTok{break}
+                  \NormalTok{\}}
+                  \NormalTok{kda_fractions =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(kda_fractions, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Data_source =} \NormalTok{dataSet, }
+                    \DataTypeTok{data_type =} \NormalTok{sub, }\DataTypeTok{repRun =} \NormalTok{k, }\DataTypeTok{TP_fraction =} \KeywordTok{getFractionOverlap}\NormalTok{(kda, }
+                      \KeywordTok{paste}\NormalTok{(dataSet, sub, k, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\KeywordTok{paste}\NormalTok{(dataSet, }
+                        \DecValTok{100}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), p, fixed), }\DataTypeTok{fixed =} \NormalTok{fixed, }
+                    \DataTypeTok{postProb =} \NormalTok{p, }\DataTypeTok{splitBy =} \StringTok{"No Split"}\NormalTok{))}
+                \NormalTok{\}}
+            \NormalTok{\}}
+        \NormalTok{\}}
+    \NormalTok{\}}
+\NormalTok{\}}
+
+\NormalTok{kda_fractions$repRun =}\StringTok{ }\KeywordTok{factor}\NormalTok{(kda_fractions$repRun)}
+\NormalTok{kda_fractions$fixed =}\StringTok{ }\KeywordTok{factor}\NormalTok{(kda_fractions$fixed, }\DataTypeTok{levels =} \KeywordTok{c}\NormalTok{(}\StringTok{"TRUE"}\NormalTok{, }
+    \StringTok{"FALSE"}\NormalTok{))}
+
+\NormalTok{kda_fractions$postProb =}\StringTok{ }\KeywordTok{factor}\NormalTok{(kda_fractions$postProb)}
+\NormalTok{kda_fractions$data_type =}\StringTok{ }\KeywordTok{as.character}\NormalTok{(kda_fractions$data_type)}
+\NormalTok{kda_fractions2 =}\StringTok{ }\NormalTok{kda_fractions[}\KeywordTok{is.element}\NormalTok{(kda_fractions$postProb, }
+    \KeywordTok{c}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.1}\NormalTok{))), ]}
+
+\NormalTok{kda_summary <-}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(kda_fractions, }\StringTok{"TP_fraction"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"fixed"}\NormalTok{, }
+    \StringTok{"postProb"}\NormalTok{, }\StringTok{"data_type"}\NormalTok{, }\StringTok{"Data_source"}\NormalTok{))}
+
+\NormalTok{kda_summary$data_type =}\StringTok{ }\KeywordTok{as.character}\NormalTok{(kda_summary$data_type)}
+\NormalTok{kda_summary$postProb =}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(kda_summary$postProb))}
+
+\NormalTok{fig5 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(kda_summary, }\KeywordTok{aes}\NormalTok{(postProb)) +}\StringTok{ }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \NormalTok{TP_fraction, }
+    \DataTypeTok{colour =} \NormalTok{data_type), }\DataTypeTok{size =} \DecValTok{1}\NormalTok{) +}\StringTok{ }\KeywordTok{geom_ribbon}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin =} \NormalTok{TP_fraction -}\StringTok{ }
+\StringTok{    }\NormalTok{sd, }\DataTypeTok{ymax =} \NormalTok{TP_fraction +}\StringTok{ }\NormalTok{sd, }\DataTypeTok{fill =} \NormalTok{data_type), }\DataTypeTok{alpha =} \FloatTok{0.6}\NormalTok{) +}\StringTok{ }
+\StringTok{    }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{"black"}\NormalTok{, }\StringTok{"cyan4"}\NormalTok{, }\StringTok{"magenta"}\NormalTok{, }
+        \StringTok{"yellow4"}\NormalTok{)) +}\StringTok{ }\KeywordTok{scale_fill_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{"black"}\NormalTok{, }\StringTok{"cyan4"}\NormalTok{, }
+    \StringTok{"magenta"}\NormalTok{, }\StringTok{"yellow4"}\NormalTok{)) +}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(~fixed +}\StringTok{ }\NormalTok{Data_source, }
+    \DataTypeTok{ncol =} \DecValTok{2}\NormalTok{) +}\StringTok{ }\KeywordTok{theme_bw}\NormalTok{() +}\StringTok{ }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }
+    \FloatTok{0.9}\NormalTok{, }\FloatTok{0.4}\NormalTok{))}
+
+\KeywordTok{show}\NormalTok{(fig5)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Table 2: Compare 5 Replicates of 100\%
+Networks}\label{table-2-compare-5-replicates-of-100-networks}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{stringsAsFactors =} \NormalTok{F)}
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list =} \KeywordTok{ls}\NormalTok{())}
+
+\KeywordTok{load}\NormalTok{(}\DataTypeTok{file =} \StringTok{"STARNET_edges_all_RIMBAnet_cliqueAdded_KDAdded_HubNodes.RData"}\NormalTok{)}
+\NormalTok{edges_all_starnet =}\StringTok{ }\NormalTok{edges_all}
+\NormalTok{edges_all_starnet$data_source =}\StringTok{ "STARNET"}
+\KeywordTok{rm}\NormalTok{(edges_all)}
+\KeywordTok{load}\NormalTok{(}\DataTypeTok{file =} \StringTok{"GTEx_edges_all_RIMBAnet_cliqueAdded_KDAdded_HubNodes.RData"}\NormalTok{)}
+\NormalTok{edges_all_gtex =}\StringTok{ }\NormalTok{edges_all}
+\NormalTok{edges_all_gtex$data_source =}\StringTok{ "GTEx"}
+\KeywordTok{rm}\NormalTok{(edges_all)}
+
+\NormalTok{edges_all =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(edges_all_starnet, edges_all_gtex)}
+
+\NormalTok{edges_all$unique_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all$data_source, edges_all$data_type, }
+    \NormalTok{edges_all$repRun, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all$edge_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all$node1, edges_all$node2, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all =}\StringTok{ }\NormalTok{edges_all[edges_all$data_type ==}\StringTok{ }\DecValTok{100}\NormalTok{, ]}
+\NormalTok{edges_all =}\StringTok{ }\NormalTok{edges_all[edges_all$postProb !=}\StringTok{ }\DecValTok{1}\NormalTok{, ]}
+
+\NormalTok{testsToRun =}\StringTok{ }\KeywordTok{combn}\NormalTok{(}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+
+\NormalTok{ab_ov_a =}\StringTok{ }\NormalTok{function(edges_all, a_name, b_name, }\DataTypeTok{prob1 =} \NormalTok{p, }\DataTypeTok{prob2 =} \NormalTok{p2) \{}
+    \NormalTok{ab =}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{intersect}\NormalTok{(edges_all$edge_name[edges_all$unique_name ==}\StringTok{ }
+\StringTok{        }\NormalTok{a_name &}\StringTok{ }\NormalTok{edges_all$postProb ==}\StringTok{ }\NormalTok{prob1], edges_all$edge_name[edges_all$unique_name ==}\StringTok{ }
+\StringTok{        }\NormalTok{b_name &}\StringTok{ }\NormalTok{edges_all$postProb ==}\StringTok{ }\NormalTok{prob2]))}
+    \NormalTok{a =}\StringTok{ }\KeywordTok{sum}\NormalTok{(edges_all$unique_name ==}\StringTok{ }\NormalTok{a_name &}\StringTok{ }\NormalTok{edges_all$postProb ==}\StringTok{ }
+\StringTok{        }\NormalTok{prob1)}
+    \KeywordTok{return}\NormalTok{(ab/a)}
+\NormalTok{\}}
+
+\NormalTok{comp_res =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{()}
+\NormalTok{for (i in }\DecValTok{1}\NormalTok{:}\KeywordTok{ncol}\NormalTok{(testsToRun)) \{}
+    \KeywordTok{cat}\NormalTok{(i, }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+    \NormalTok{for (p in }\KeywordTok{unique}\NormalTok{(edges_all$postProb)) \{}
+        \NormalTok{comp_res =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(comp_res, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{A_name =} \NormalTok{testsToRun[}\DecValTok{1}\NormalTok{, }
+            \NormalTok{i], }\DataTypeTok{B_name =} \NormalTok{testsToRun[}\DecValTok{2}\NormalTok{, i], }\DataTypeTok{data_source =} \StringTok{"GTEx"}\NormalTok{, }
+            \DataTypeTok{ab_ov_a =} \KeywordTok{ab_ov_a}\NormalTok{(edges_all, }\KeywordTok{paste}\NormalTok{(}\StringTok{"GTEx"}\NormalTok{, }\DecValTok{100}\NormalTok{, testsToRun[}\DecValTok{1}\NormalTok{, }
+                \NormalTok{i], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\KeywordTok{paste}\NormalTok{(}\StringTok{"GTEx"}\NormalTok{, }\DecValTok{100}\NormalTok{, testsToRun[}\DecValTok{2}\NormalTok{, }
+                \NormalTok{i], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\DataTypeTok{prob1 =} \NormalTok{p, }\DataTypeTok{prob2 =} \NormalTok{p), }\DataTypeTok{postProb =} \NormalTok{p))}
+        \NormalTok{comp_res =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(comp_res, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{A_name =} \NormalTok{testsToRun[}\DecValTok{2}\NormalTok{, }
+            \NormalTok{i], }\DataTypeTok{B_name =} \NormalTok{testsToRun[}\DecValTok{1}\NormalTok{, i], }\DataTypeTok{data_source =} \StringTok{"GTEx"}\NormalTok{, }
+            \DataTypeTok{ab_ov_a =} \KeywordTok{ab_ov_a}\NormalTok{(edges_all, }\KeywordTok{paste}\NormalTok{(}\StringTok{"GTEx"}\NormalTok{, }\DecValTok{100}\NormalTok{, testsToRun[}\DecValTok{2}\NormalTok{, }
+                \NormalTok{i], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\KeywordTok{paste}\NormalTok{(}\StringTok{"GTEx"}\NormalTok{, }\DecValTok{100}\NormalTok{, testsToRun[}\DecValTok{1}\NormalTok{, }
+                \NormalTok{i], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\DataTypeTok{prob1 =} \NormalTok{p, }\DataTypeTok{prob2 =} \NormalTok{p), }\DataTypeTok{postProb =} \NormalTok{p))}
+        
+        \NormalTok{comp_res =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(comp_res, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{A_name =} \NormalTok{testsToRun[}\DecValTok{1}\NormalTok{, }
+            \NormalTok{i], }\DataTypeTok{B_name =} \NormalTok{testsToRun[}\DecValTok{2}\NormalTok{, i], }\DataTypeTok{data_source =} \StringTok{"STARNET"}\NormalTok{, }
+            \DataTypeTok{ab_ov_a =} \KeywordTok{ab_ov_a}\NormalTok{(edges_all, }\KeywordTok{paste}\NormalTok{(}\StringTok{"STARNET"}\NormalTok{, }\DecValTok{100}\NormalTok{, }
+                \NormalTok{testsToRun[}\DecValTok{1}\NormalTok{, i], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\KeywordTok{paste}\NormalTok{(}\StringTok{"STARNET"}\NormalTok{, }
+                \DecValTok{100}\NormalTok{, testsToRun[}\DecValTok{2}\NormalTok{, i], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\DataTypeTok{prob1 =} \NormalTok{p, }
+                \DataTypeTok{prob2 =} \NormalTok{p), }\DataTypeTok{postProb =} \NormalTok{p))}
+        \NormalTok{comp_res =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(comp_res, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{A_name =} \NormalTok{testsToRun[}\DecValTok{2}\NormalTok{, }
+            \NormalTok{i], }\DataTypeTok{B_name =} \NormalTok{testsToRun[}\DecValTok{1}\NormalTok{, i], }\DataTypeTok{data_source =} \StringTok{"STARNET"}\NormalTok{, }
+            \DataTypeTok{ab_ov_a =} \KeywordTok{ab_ov_a}\NormalTok{(edges_all, }\KeywordTok{paste}\NormalTok{(}\StringTok{"STARNET"}\NormalTok{, }\DecValTok{100}\NormalTok{, }
+                \NormalTok{testsToRun[}\DecValTok{2}\NormalTok{, i], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\KeywordTok{paste}\NormalTok{(}\StringTok{"STARNET"}\NormalTok{, }
+                \DecValTok{100}\NormalTok{, testsToRun[}\DecValTok{1}\NormalTok{, i], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\DataTypeTok{prob1 =} \NormalTok{p, }
+                \DataTypeTok{prob2 =} \NormalTok{p), }\DataTypeTok{postProb =} \NormalTok{p))}
+    \NormalTok{\}}
+\NormalTok{\}}
+
+\NormalTok{tab_out =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{postProb =} \KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.1}\NormalTok{), }\DataTypeTok{GTEx_mean =} \OtherTok{NA}\NormalTok{, }
+    \DataTypeTok{GTEx_sd =} \OtherTok{NA}\NormalTok{, }\DataTypeTok{STARNET_mean =} \OtherTok{NA}\NormalTok{, }\DataTypeTok{STARNET_sd =} \OtherTok{NA}\NormalTok{)}
+\NormalTok{tab_out$GTEx_mean =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(tab_out$postProb, function(x) \{}
+    \KeywordTok{mean}\NormalTok{(comp_res$ab_ov_a[comp_res$data_source ==}\StringTok{ "GTEx"} \NormalTok{&}\StringTok{ }\NormalTok{comp_res$postProb ==}\StringTok{ }
+\StringTok{        }\NormalTok{x])}
+\NormalTok{\})}
+
+\NormalTok{tab_out$GTEx_sd =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(tab_out$postProb, function(x) \{}
+    \KeywordTok{sd}\NormalTok{(comp_res$ab_ov_a[comp_res$data_source ==}\StringTok{ "GTEx"} \NormalTok{&}\StringTok{ }\NormalTok{comp_res$postProb ==}\StringTok{ }
+\StringTok{        }\NormalTok{x])}
+\NormalTok{\})}
+
+\NormalTok{tab_out$STARNET_mean =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(tab_out$postProb, function(x) \{}
+    \KeywordTok{mean}\NormalTok{(comp_res$ab_ov_a[comp_res$data_source ==}\StringTok{ "STARNET"} \NormalTok{&}\StringTok{ }
+\StringTok{        }\NormalTok{comp_res$postProb ==}\StringTok{ }\NormalTok{x])}
+\NormalTok{\})}
+
+\NormalTok{tab_out$STARNET_sd =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(tab_out$postProb, function(x) \{}
+    \KeywordTok{sd}\NormalTok{(comp_res$ab_ov_a[comp_res$data_source ==}\StringTok{ "STARNET"} \NormalTok{&}\StringTok{ }\NormalTok{comp_res$postProb ==}\StringTok{ }
+\StringTok{        }\NormalTok{x])}
+\NormalTok{\})}
+
+\KeywordTok{write.table}\NormalTok{(tab_out, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\DataTypeTok{row.names =} \NormalTok{F, }\DataTypeTok{col.names =} \NormalTok{T, }
+    \DataTypeTok{file =} \StringTok{"Updated_Table3.txt"}\NormalTok{, }\DataTypeTok{quote =} \NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Table 3: Jaccard Index}\label{table-3-jaccard-index}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{get_jacard <-}\StringTok{ }\NormalTok{function(edges_all, name1, name2, prob) \{}
+    \NormalTok{aANDb =}\StringTok{ }\KeywordTok{length}\NormalTok{(}\KeywordTok{intersect}\NormalTok{(edges_all$edge_name[edges_all$postProb ==}\StringTok{ }
+\StringTok{        }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all$name ==}\StringTok{ }\NormalTok{name1], edges_all$edge_name[edges_all$postProb ==}\StringTok{ }
+\StringTok{        }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all$name ==}\StringTok{ }\NormalTok{name2]))}
+    \NormalTok{a =}\StringTok{ }\KeywordTok{sum}\NormalTok{(edges_all$postProb ==}\StringTok{ }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all$name ==}\StringTok{ }\NormalTok{name1)}
+    \NormalTok{b =}\StringTok{ }\KeywordTok{sum}\NormalTok{(edges_all$postProb ==}\StringTok{ }\NormalTok{prob &}\StringTok{ }\NormalTok{edges_all$name ==}\StringTok{ }\NormalTok{name2)}
+    
+    \NormalTok{jacard =}\StringTok{ }\NormalTok{aANDb/(a +}\StringTok{ }\NormalTok{b -}\StringTok{ }\NormalTok{aANDb)}
+    \KeywordTok{return}\NormalTok{(jacard)}
+\NormalTok{\}}
+
+\NormalTok{edges_all_gtex$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_gtex$data_type, edges_all_gtex$repRun, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_starnet$name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_starnet$data_type, edges_all_starnet$repRun, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_gtex$edge_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_gtex$node1, edges_all_gtex$node2, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_starnet$edge_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_starnet$node1, }
+    \NormalTok{edges_all_starnet$node2, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{jaccard_values =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{()}
+\NormalTok{combos =}\StringTok{ }\KeywordTok{combn}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{for (subsamp in }\KeywordTok{c}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{90}\NormalTok{, }\DecValTok{100}\NormalTok{)) \{}
+    \CommentTok{# cat('on subsampling',subsamp,'\textbackslash{}n')}
+    \NormalTok{for (p in }\KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.1}\NormalTok{)) \{}
+        \CommentTok{# cat('on prob',p,'\textbackslash{}n')}
+        \NormalTok{for (k in }\DecValTok{1}\NormalTok{:}\KeywordTok{ncol}\NormalTok{(combos)) \{}
+            \NormalTok{jaccard_values =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(jaccard_values, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{name1 =} \KeywordTok{paste}\NormalTok{(subsamp, }
+                \NormalTok{combos[}\DecValTok{1}\NormalTok{, k], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\DataTypeTok{name2 =} \KeywordTok{paste}\NormalTok{(subsamp, }
+                \NormalTok{combos[}\DecValTok{2}\NormalTok{, k], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\DataTypeTok{prob =} \NormalTok{p, }\DataTypeTok{jaccard =} \KeywordTok{get_jacard}\NormalTok{(edges_all_gtex, }
+                \KeywordTok{paste}\NormalTok{(subsamp, combos[}\DecValTok{1}\NormalTok{, k], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\KeywordTok{paste}\NormalTok{(subsamp, }
+                  \NormalTok{combos[}\DecValTok{2}\NormalTok{, k], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), p), }\DataTypeTok{dataSource =} \StringTok{"GTEx"}\NormalTok{))}
+            \NormalTok{jaccard_values =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(jaccard_values, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{name1 =} \KeywordTok{paste}\NormalTok{(subsamp, }
+                \NormalTok{combos[}\DecValTok{1}\NormalTok{, k], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\DataTypeTok{name2 =} \KeywordTok{paste}\NormalTok{(subsamp, }
+                \NormalTok{combos[}\DecValTok{2}\NormalTok{, k], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\DataTypeTok{prob =} \NormalTok{p, }\DataTypeTok{jaccard =} \KeywordTok{get_jacard}\NormalTok{(edges_all_starnet, }
+                \KeywordTok{paste}\NormalTok{(subsamp, combos[}\DecValTok{1}\NormalTok{, k], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\KeywordTok{paste}\NormalTok{(subsamp, }
+                  \NormalTok{combos[}\DecValTok{2}\NormalTok{, k], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), p), }\DataTypeTok{dataSource =} \StringTok{"STARNET"}\NormalTok{))}
+            
+            \NormalTok{if (subsamp !=}\StringTok{ }\DecValTok{100}\NormalTok{) \{}
+                \NormalTok{jaccard_values =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(jaccard_values, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{name1 =} \KeywordTok{paste}\NormalTok{(subsamp, }
+                  \NormalTok{combos[}\DecValTok{1}\NormalTok{, k], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\DataTypeTok{name2 =} \StringTok{"100_1"}\NormalTok{, }
+                  \DataTypeTok{prob =} \NormalTok{p, }\DataTypeTok{jaccard =} \KeywordTok{get_jacard}\NormalTok{(edges_all_gtex, }
+                    \KeywordTok{paste}\NormalTok{(subsamp, combos[}\DecValTok{1}\NormalTok{, k], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }
+                    \StringTok{"100_1"}\NormalTok{, p), }\DataTypeTok{dataSource =} \StringTok{"GTEx"}\NormalTok{))}
+                \NormalTok{jaccard_values =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(jaccard_values, }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{name1 =} \KeywordTok{paste}\NormalTok{(subsamp, }
+                  \NormalTok{combos[}\DecValTok{1}\NormalTok{, k], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }\DataTypeTok{name2 =} \StringTok{"100_1"}\NormalTok{, }
+                  \DataTypeTok{prob =} \NormalTok{p, }\DataTypeTok{jaccard =} \KeywordTok{get_jacard}\NormalTok{(edges_all_starnet, }
+                    \KeywordTok{paste}\NormalTok{(subsamp, combos[}\DecValTok{1}\NormalTok{, k], }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{), }
+                    \StringTok{"100_1"}\NormalTok{, p), }\DataTypeTok{dataSource =} \StringTok{"STARNET"}\NormalTok{))}
+            \NormalTok{\}}
+        \NormalTok{\}}
+    \NormalTok{\}}
+\NormalTok{\}}
+
+\NormalTok{jaccard_values_output =}\StringTok{ }\NormalTok{jaccard_values[}\KeywordTok{is.element}\NormalTok{(jaccard_values$prob, }
+    \KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.4}\NormalTok{)), ]}
+\NormalTok{jaccard_values_output$type1 =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(jaccard_values_output$name1, }
+    \NormalTok{function(x) \{}
+        \KeywordTok{strsplit}\NormalTok{(x, }\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{]}
+    \NormalTok{\})}
+\NormalTok{jaccard_values_output$type2 =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(jaccard_values_output$name2, }
+    \NormalTok{function(x) \{}
+        \KeywordTok{strsplit}\NormalTok{(x, }\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{]}
+    \NormalTok{\})}
+
+\NormalTok{jaccard_table =}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(jaccard_values_output, }\StringTok{"jaccard"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"dataSource"}\NormalTok{, }
+    \StringTok{"type1"}\NormalTok{, }\StringTok{"type2"}\NormalTok{, }\StringTok{"prob"}\NormalTok{))}
+\KeywordTok{print}\NormalTok{(jaccard_table[, }\KeywordTok{c}\NormalTok{(}\StringTok{"dataSource"}\NormalTok{, }\StringTok{"type1"}\NormalTok{, }\StringTok{"type2"}\NormalTok{, }\StringTok{"prob"}\NormalTok{, }
+    \StringTok{"N"}\NormalTok{, }\StringTok{"jaccard"}\NormalTok{, }\StringTok{"sd"}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Table 4: Edge Counts}\label{table-4-edge-counts}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{load}\NormalTok{(}\StringTok{"Simulation_edges_all_RIMBAnet.RData"}\NormalTok{)}
+\NormalTok{edges_all_sim =}\StringTok{ }\NormalTok{edges_all}
+\KeywordTok{rm}\NormalTok{(edges_all)}
+\NormalTok{edges_all_sim$type_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_sim$data_type, edges_all_sim$repRun, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_sim$edge_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_sim$node1, edges_all_sim$node2, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+
+\KeywordTok{load}\NormalTok{(}\StringTok{"GTEx_edges_all_RIMBAnet_cliqueAdded_KDAdded_HubNodes.RData"}\NormalTok{)}
+\NormalTok{edges_all_gtex =}\StringTok{ }\NormalTok{edges_all}
+\NormalTok{edges_all_gtex$type_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_gtex$data_type, edges_all_gtex$repRun, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_gtex$edge_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_gtex$node1, edges_all_gtex$node2, }
+    \DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\KeywordTok{rm}\NormalTok{(edges_all)}
+
+\KeywordTok{load}\NormalTok{(}\StringTok{"STARNET_edges_all_RIMBAnet_cliqueAdded_KDAdded_HubNodes.RData"}\NormalTok{)}
+\NormalTok{edges_all_starnet =}\StringTok{ }\NormalTok{edges_all}
+\KeywordTok{rm}\NormalTok{(edges_all)}
+\NormalTok{edges_all_starnet$type_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_starnet$data_type, }
+    \NormalTok{edges_all_starnet$repRun, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+\NormalTok{edges_all_starnet$edge_name =}\StringTok{ }\KeywordTok{paste}\NormalTok{(edges_all_starnet$node1, }
+    \NormalTok{edges_all_starnet$node2, }\DataTypeTok{sep =} \StringTok{"_"}\NormalTok{)}
+
+\NormalTok{tab4_starnet =}\StringTok{ }\KeywordTok{table}\NormalTok{(edges_all_starnet$type_name[}\KeywordTok{is.element}\NormalTok{(edges_all_starnet$postProb, }
+    \KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.4}\NormalTok{))], edges_all_starnet$postProb[}\KeywordTok{is.element}\NormalTok{(edges_all_starnet$postProb, }
+    \KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.4}\NormalTok{))])}
+\KeywordTok{colnames}\NormalTok{(tab4_starnet) =}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"STARNET"}\NormalTok{, }\KeywordTok{colnames}\NormalTok{(tab4_starnet))}
+\NormalTok{edges_all_gtex$postProb =}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(edges_all_gtex$postProb))}
+\NormalTok{tab4_gtex =}\StringTok{ }\KeywordTok{table}\NormalTok{(edges_all_gtex$type_name[}\KeywordTok{is.element}\NormalTok{(edges_all_gtex$postProb, }
+    \KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.4}\NormalTok{))], edges_all_gtex$postProb[}\KeywordTok{is.element}\NormalTok{(edges_all_gtex$postProb, }
+    \KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.4}\NormalTok{))])}
+\KeywordTok{colnames}\NormalTok{(tab4_gtex) =}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"GTEx"}\NormalTok{, }\KeywordTok{colnames}\NormalTok{(tab4_gtex))}
+
+\NormalTok{edges_all_sim$postProb =}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(edges_all_sim$postProb))}
+\NormalTok{tab4_sim =}\StringTok{ }\KeywordTok{table}\NormalTok{(edges_all_sim$type_name[}\KeywordTok{is.element}\NormalTok{(edges_all_sim$postProb, }
+    \KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.4}\NormalTok{))], edges_all_sim$postProb[}\KeywordTok{is.element}\NormalTok{(edges_all_sim$postProb, }
+    \KeywordTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.9}\NormalTok{, }\FloatTok{0.4}\NormalTok{))])}
+\KeywordTok{colnames}\NormalTok{(tab4_sim) =}\StringTok{ }\KeywordTok{paste}\NormalTok{(}\StringTok{"Sim"}\NormalTok{, }\KeywordTok{colnames}\NormalTok{(tab4_sim))}
+
+\NormalTok{tab4_starnet =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \DecValTok{5}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{), tab4_starnet)}
+\NormalTok{tab4_gtex =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(}\KeywordTok{matrix}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\DataTypeTok{nrow =} \DecValTok{5}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{), tab4_gtex)}
+\KeywordTok{rownames}\NormalTok{(tab4_starnet)[}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{] =}\StringTok{ }\KeywordTok{rownames}\NormalTok{(tab4_sim)[}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{]}
+\KeywordTok{rownames}\NormalTok{(tab4_gtex)[}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{] =}\StringTok{ }\KeywordTok{rownames}\NormalTok{(tab4_sim)[}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{]}
+\NormalTok{tab4 =}\StringTok{ }\KeywordTok{cbind}\NormalTok{(tab4_starnet, tab4_gtex, tab4_sim)}
+\NormalTok{tab4_melt =}\StringTok{ }\KeywordTok{melt}\NormalTok{(tab4)}
+\NormalTok{tab4_melt$X1 =}\StringTok{ }\KeywordTok{as.character}\NormalTok{(tab4_melt$X1)}
+\NormalTok{tab4_melt$subsampling =}\StringTok{ }\KeywordTok{sapply}\NormalTok{(tab4_melt$X1, function(x) \{}
+    \KeywordTok{strsplit}\NormalTok{(x, }\StringTok{"_"}\NormalTok{)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{]}
+\NormalTok{\})}
+\NormalTok{table4 <-}\StringTok{ }\KeywordTok{summarySE}\NormalTok{(tab4_melt, }\StringTok{"value"}\NormalTok{, }\DataTypeTok{groupvars =} \KeywordTok{c}\NormalTok{(}\StringTok{"subsampling"}\NormalTok{, }
+    \StringTok{"X2"}\NormalTok{))}
+\KeywordTok{print}\NormalTok{(table4[!}\KeywordTok{is.na}\NormalTok{(table4$value), }\KeywordTok{c}\NormalTok{(}\StringTok{"subsampling"}\NormalTok{, }\StringTok{"X2"}\NormalTok{, }\StringTok{"N"}\NormalTok{, }
+    \StringTok{"value"}\NormalTok{, }\StringTok{"sd"}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
+
+\end{document}

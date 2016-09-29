@@ -40,7 +40,7 @@ https://github.com/divara01/PSB2017_ReproducibilityOfBNs/tree/data/Simulation_tr
 the actual simulation true, real network. 
 ##Code:
 ####To generate all the plots and tables for the PSB paper - 
-https://github.com/divara01/PSB2017_ReproducibilityOfBNs/PSB_RMarkdown.Rmd
+https://github.com/divara01/PSB2017_ReproducibilityOfBNs/blob/master/PSB_RMarkdownGIT.Rmd
 
 ####To run the clique detection - 
 We used COS https://sourceforge.net/projects/cosparallel/ with the standard parameter settings. 
@@ -50,16 +50,16 @@ http://research.mssm.edu/integrative-network-biology/RIMBANET/RIMBANET_overview.
 
 ####Scripts used for running RIMBANet - 
 #####Driver script --
-https://github.com/divara01/PSB2017_ReproducibilityOfBNs/BN_driver_extra.sh
+https://github.com/divara01/PSB2017_ReproducibilityOfBNs/blob/master/BN_driver_extra.sh
 #####Readme for the Driver script -- 
-https://github.com/divara01/PSB2017_ReproducibilityOfBNs/BN_extra.README
+https://github.com/divara01/PSB2017_ReproducibilityOfBNs/blob/master/BN_extra.README
 #####Script called in the driver -- 
-https://github.com/divara01/PSB2017_ReproducibilityOfBNs/process_w_genetics_extra.pl
+https://github.com/divara01/PSB2017_ReproducibilityOfBNs/blob/master/process_w_genetics_extra.pl
 #####Script called in the driver to submit jobs to LSF queue system -- 
-https://github.com/divara01/PSB2017_ReproducibilityOfBNs/run_w_genetics_queue.pl
+https://github.com/divara01/PSB2017_ReproducibilityOfBNs/blob/master/run_w_genetics_queue.pl
 #####All other scripts will be downloaded when RIMBANet is downloaded.
 
 ####To run RIMBANet for each of the subsampling networks - 
-https://github.com/divara01/PSB2017_ReproducibilityOfBNs/PSB_Run_BN.sh
+https://github.com/divara01/PSB2017_ReproducibilityOfBNs/blob/master/PSB_Run_BN.sh
 
 

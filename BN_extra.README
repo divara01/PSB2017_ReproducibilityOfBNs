@@ -1,0 +1,96 @@
+#%%%%%%%%%%%%%%%%%%%README%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# A package for Bayesian network reconstruction
+#
+# Author:  Dr. Jun Zhu, Amgen Inc., Thousand Oaks, CA, 2002
+#          Dr. Jun Zhu, Rosetta Informatics, a wholly owned subsidiary of Merck & CO., Seattle, WA, 2004, 2008
+#
+# Acknowledge:  Thanks to Amgen Inc. and Merck & CO. for their generous supports
+#
+# If you use this package, please cite the following references
+#
+# (1) Zhu J, Lum PY, Lamb J, GuhaThakurta D, Edwards SW, et al. An integrative genomics approach to the
+#     reconstruction of gene networks in segregating populations. Cytogenet Genome Res 105: 363-374 (2004)
+# (2) Zhu J, Wiener MC, Zhang C, Fridman A, Minch E, Lum PY, Sachs JR, & Schadt EE Increasing the power to
+#     detect causal associations by combining genotypic and expression data in segregating populations
+#     PLoS Comput Biol 3, e69. (2007)
+# (3) Zhu, J., Zhang, B., Smith, E.N., Drees, B., Brem, R.B., Kruglyak, L., Bumgarner, R.E. and Schadt, E.E.
+#     Integrating large-scale functional genomic data to dissect the complexity of yeast regulatory networks,
+#     Nat Genet, 40, 854-861 (2008)
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Driver script to run RIMBANet. 
+# See Joseph Scarpa or Ariella Cohain for questions. 
+# (joseph.scarpa@icahn.mssm.edu) (ariella.cohain@icahn.mssm.edu)
+#
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# WE HIGHLY RECOMMEND RUNNING THIS DRIVER IN A SCREEN SESSION FOR LARGE BN 
+# (https://www.gnu.org/software/screen/manual/screen.html#Overview)
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# Running BN scripts:
+./BN_driver_extra.sh -d <discretized_data_path> -C <continuous> -w <continuous_data_path> -b <path_to_BN_extra> -o <output_path> -A <minerva_allocataion_account> -e <cis_eQTL> [ -E <high_quality_cis_eqtl_file> -w <wallclock> -m <memory> -q <minerva_queueName>  -c <causal_list> -r <partial_correlation_list_file> -K <kegg_prior_file> -T <TF_prior_file> -P <ppi_prior_file> ]
+
+# Running Yeast 4 Distribution Data (download here: http://icahn.mssm.edu/departments-and-institutes/genomics/about/software/rimbanet); this example demonstrates usage with cis-eQTL priors, causal gene priors, and TF binding priors, as published in (PMID: 22509135, PMCID: PMC3317911).
+
+bash $PATH_TO_Run_BN/BN_driver_extra.sh -d $PATH_TO_YEAST4DISTRIBUTION/Global/BD/data.txt -b $PATH_TO_Run_BN/ -o /sc/orga/scratch/$USER/YeastNetwork_output/ -e $PATH_TO_YEAST4DISTRIBUTION/Global/BD/cisqtl.txt -q low -A $ACCOUNT -W 24:00 -w $PATH_TO_YEAST4DISTRIBUTION/Global/BC/data.txt -E $PATH_TO_YEAST4DISTRIBUTION/Global/BD/cisqtl_HQ.txt -c $PATH_TO_YEAST4DISTRIBUTION/Global/BD/bannedList_causal.txt -T $PATH_TO_YEAST4DISTRIBUTION/Global/BD/prior.TF_PPI 
+
+
+Details on arguments:
+	%%%%%%%%%%%%%%%%%%%%%%%
+	--Mandatory Arguments--
+	%%%%%%%%%%%%%%%%%%%%%%%
+	
+	<discretized_data_path>:
+	 	full path to tab delimited discretized data (discretize by preferred method to three states; 0,1,2).
+	 	**** format of data: first column is gene names, no header
+
+	<continuous>:
+		Default is TRUE.
+
+	<continuous_data_path>:
+		If using continuous data (flag -C is TRUE), then use this flag to give the path to the continuous data. Formatted: first column is gene names, no column headers, tab delimited. 
+
+	<path_to_BN_extra>:
+		full path to Run_BN directory.
+
+	<output_path>:
+	 	output directory for Run_BN. Driver will create this directory if it is not yet made. If it is made, THIS DIRECTORY MUST BE EMPTY! 
+
+	<minerva_allocataion_account>:
+		Which account should be charged for this run time.
+
+	<cis_eQTL>: 
+		full path to file that contains a list of cis eQTLs (gene names) with NO HEADERS OR ROW NAMES [see <high_quality_cis_eqtl_file> in optional arguments]. These eQTLs should have previously been caluclated, with each gene name on a new line. The names of these genes should correspond to the names of the genes in your continuous and discretized expression data. IF YOU WILL NOT USE EQTL PRIORS, PASS IN PATH TO "empty_cis_file" IN Run_BN WHICH IS PROVIDED.
+
+	%%%%%%%%%%%%%%%%%%%%%%%
+	--Optional Arguments--
+	%%%%%%%%%%%%%%%%%%%%%%%
+
+	<high_quality_cis_eqtl_file>:
+		if you are inputting a non-empty cis_eQTL file, also pass that file into this flag. full path to file of high quality cis eqtls. Format: same as <cis_eQTL>. 
+
+	<wallclock>:
+		the amount of time for each BN reconstruction job to run. Default is: 24:00 (24 hours)
+
+	<memory>:
+		the amount of memory for each BN reconstruction job to run. Default is: 1000 (MB)
+
+	<minerva_queueName>:
+		the queue for each BN reconstruction job. Default is: low
+
+	<causal_list>:
+		full path to file with causal gene relationships, used for priors. Default: NULL. Format: gene<space>gene<space>0
+
+	<partial_correlation_list_file>:
+		full path to file with list of genes that have partial correlation. Default: NULL. Format: gene<space>-><space>gene<space>0.5<space>partial correlation value
+
+	<kegg_prior_file>:
+		full path to file with list of genes that have shared KEGG pathways. Default: NULL. Format: gene<tab>gene<tab>value
+
+	<TF_prior_file>:
+		full path to file with list of genes with TF binding relationships. Default: NULL. Format: gene<tab>gene<tab>value
+	
+	<ppi_prior_file>:
+		full path to file with list of genes that have protein-protein interactions. Default: NULL. Format: gene<tab>gene<tab>value
+

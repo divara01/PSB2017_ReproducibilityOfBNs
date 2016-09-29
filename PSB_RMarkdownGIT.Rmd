@@ -449,7 +449,7 @@ for(labelsTagIndex in 1:length(dataFN)){
 }
 ```
 
-We feed the resulting edge files into the COS program to determine which edges have both nodes in a single clique.  The code below parses the results from COS and saves the cliques into a list for each dataset, GTEx and STARNET.
+We feed the resulting edge files into the COS program to determine which edges have both nodes in a single clique.  Please see the README file that is provided in the GITHUB repository. The code below parses the results from COS and saves the cliques into a list for each dataset, GTEx and STARNET.
 ```{r Create Cliqiue Lists, echo = TRUE, eval = FALSE}
 subSets <- c(100, 90, 80, 50)
 replicates <- c(1:5)
